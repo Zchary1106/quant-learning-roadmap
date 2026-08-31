@@ -1,0 +1,8 @@
+.DS_Store
+05_实验代码/.venv/
+05_实验代码/.pytest_cache/
+05_实验代码/**/*.egg-info/
+05_实验代码/**/__pycache__/
+05_实验代码/data/processed/*
+!05_实验代码/data/processed/.gitkeep
+*.pyc

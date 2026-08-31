@@ -1,0 +1,14 @@
+name: Plotly AAPL finance chart sample
+source_url: https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv
+provider: Plotly public datasets repository
+retrieved_at: "2026-08-30"
+license_terms: MIT; see data/LICENSE.plotly and https://github.com/plotly/datasets/blob/master/LICENSE
+coverage: AAPL, 2015-02-17 through 2017-02-16
+frequency: daily
+timezone_calendar: Date-only US trading sessions; no intraday timezone
+point_in_time: false
+corporate_actions: Includes a provider-supplied adjusted close; labs intentionally use raw close
+fields: Date, OHLC, volume, adjusted close, and provider chart indicators
+missing_semantics: No missing rows or values in the fixed snapshot
+known_issues: Original market-data vendor is not documented; educational use only
+checksum_or_version: sha256:24c7604edfd5afe862ddb9f9535e2fd7351f43711bfc442bca52055e15e37bcd
