@@ -1,0 +1,777 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="从 Python、统计与市场基础，到回测、组合、风险和毕业项目的 24 周量化学习路线。">
+  <meta name="theme-color" content="#f3f5ef">
+  <meta property="og:title" content="量化学习路线 | 24 周系统课">
+  <meta property="og:description" content="把想法变成可复现、可验证、可解释的量化研究。">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://zchary1106.github.io/quant-learning-roadmap/assets/market-research.jpg">
+  <link rel="canonical" href="https://zchary1106.github.io/quant-learning-roadmap/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23245c35'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-family='Arial,sans-serif' font-size='23' font-weight='700' fill='%23f8fff8'%3EQ24%3C/text%3E%3C/svg%3E">
+  <link rel="preload" as="image" href="assets/market-research.jpg">
+  <title>量化学习路线 | 24 周系统课</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f3f5ef;
+      --surface: #fcfdf9;
+      --surface-strong: #e7ebe2;
+      --text: #182019;
+      --muted: #5b655d;
+      --line: #cdd4cb;
+      --accent: #245c35;
+      --accent-strong: #19482a;
+      --accent-soft: #d9ead9;
+      --on-accent: #f8fff8;
+      --shadow: 0 20px 60px rgba(35, 57, 40, 0.12);
+      --radius: 16px;
+      --max: 1240px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+        --bg: #111512;
+        --surface: #181e19;
+        --surface-strong: #222a23;
+        --text: #eef4eb;
+        --muted: #a9b5aa;
+        --line: #344037;
+        --accent: #b7f36a;
+        --accent-strong: #d0ff91;
+        --accent-soft: #273a27;
+        --on-accent: #14200f;
+        --shadow: 0 24px 70px rgba(0, 0, 0, 0.32);
+      }
+    }
+
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #111512;
+      --surface: #181e19;
+      --surface-strong: #222a23;
+      --text: #eef4eb;
+      --muted: #a9b5aa;
+      --line: #344037;
+      --accent: #b7f36a;
+      --accent-strong: #d0ff91;
+      --accent-soft: #273a27;
+      --on-accent: #14200f;
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.32);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Avenir Next", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+      line-height: 1.6;
+      text-rendering: optimizeLegibility;
+    }
+    img { display: block; max-width: 100%; height: auto; }
+    a { color: inherit; }
+    button, input { font: inherit; }
+    button { color: inherit; }
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+    .skip-link {
+      position: fixed;
+      left: 16px;
+      top: 12px;
+      z-index: 20;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: var(--accent);
+      color: var(--on-accent);
+      transform: translateY(-160%);
+    }
+    .skip-link:focus { transform: translateY(0); }
+    .shell { width: min(calc(100% - 40px), var(--max)); margin-inline: auto; }
+    .nav-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid color-mix(in srgb, var(--line) 75%, transparent);
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+    nav {
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; font-weight: 750; }
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: var(--accent);
+      color: var(--on-accent);
+      font-size: 13px;
+      letter-spacing: -0.04em;
+    }
+    .nav-links { display: flex; align-items: center; gap: 28px; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; }
+    .nav-links a:hover { color: var(--text); }
+    .theme-toggle {
+      min-height: 40px;
+      padding: 8px 13px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface);
+      cursor: pointer;
+    }
+    .theme-toggle:active, .button:active, .phase-tab:active, .track-button:active { transform: translateY(1px); }
+
+    .hero {
+      min-height: calc(100dvh - 68px);
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(420px, 1.1fr);
+      gap: clamp(44px, 7vw, 100px);
+      align-items: center;
+      padding-block: clamp(52px, 8vw, 96px);
+    }
+    .eyebrow {
+      margin: 0 0 16px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      max-width: 11ch;
+      margin-bottom: 24px;
+      font-size: clamp(48px, 6vw, 78px);
+      line-height: 0.98;
+      letter-spacing: -0.065em;
+      font-weight: 760;
+    }
+    .hero-copy > p:not(.eyebrow) { max-width: 29rem; margin-bottom: 30px; color: var(--muted); font-size: clamp(17px, 2vw, 21px); }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 12px 18px;
+      border: 1px solid var(--accent);
+      border-radius: 12px;
+      background: var(--accent);
+      color: var(--on-accent);
+      text-decoration: none;
+      font-weight: 760;
+      white-space: nowrap;
+      transition: transform 180ms ease, background 180ms ease;
+    }
+    .button:hover { background: var(--accent-strong); }
+    .button.secondary { border-color: var(--line); background: transparent; color: var(--text); }
+    .button.secondary:hover { background: var(--surface-strong); }
+    .hero-media { margin: 0; }
+    .hero-media img {
+      width: 100%;
+      aspect-ratio: 3 / 2;
+      object-fit: cover;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      filter: saturate(0.72) contrast(1.06);
+    }
+    .hero-media figcaption { margin-top: 12px; color: var(--muted); font-size: 13px; }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      margin-bottom: clamp(80px, 11vw, 150px);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .metric { padding: 26px 18px 26px 0; }
+    .metric strong { display: block; font-size: clamp(28px, 4vw, 48px); line-height: 1; letter-spacing: -0.04em; }
+    .metric span { color: var(--muted); font-size: 13px; }
+
+    section { scroll-margin-top: 92px; }
+    .section-space { padding-bottom: clamp(92px, 12vw, 160px); }
+    .section-head { max-width: 780px; margin-bottom: 40px; }
+    h2 { margin-bottom: 15px; font-size: clamp(34px, 5vw, 62px); line-height: 1.02; letter-spacing: -0.045em; }
+    .section-head p, .lead { max-width: 62ch; color: var(--muted); font-size: 17px; }
+
+    .planner {
+      padding: clamp(26px, 4vw, 54px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+    .planner-top {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 36px;
+    }
+    .progress-readout { text-align: right; }
+    .progress-readout strong { display: block; font-size: 42px; line-height: 1; letter-spacing: -0.05em; }
+    .progress-readout span { color: var(--muted); font-size: 13px; }
+    .track-switcher {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      padding: 8px;
+      margin-bottom: 24px;
+      border-radius: var(--radius);
+      background: var(--surface-strong);
+    }
+    .track-button, .phase-tab {
+      min-height: 46px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      background: transparent;
+      cursor: pointer;
+      font-weight: 720;
+    }
+    .track-button[aria-pressed="true"], .phase-tab[aria-selected="true"] {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: var(--on-accent);
+    }
+    .phase-tabs {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(126px, 1fr));
+      gap: 8px;
+      padding-bottom: 10px;
+      overflow-x: auto;
+      scrollbar-width: thin;
+    }
+    .phase-tab { border-color: var(--line); background: var(--bg); }
+    .phase-panel { padding-top: 32px; }
+    .phase-panel-header {
+      display: grid;
+      grid-template-columns: 1fr minmax(220px, 0.45fr);
+      gap: 36px;
+      align-items: end;
+      margin-bottom: 28px;
+    }
+    .phase-panel-header h3 { margin-bottom: 4px; font-size: clamp(26px, 4vw, 40px); letter-spacing: -0.035em; }
+    .phase-panel-header p { margin: 0; color: var(--muted); }
+    .weeks-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .week-card {
+      position: relative;
+      min-height: 220px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--bg);
+    }
+    .week-card.is-complete { border-color: var(--accent); background: var(--accent-soft); }
+    .week-label { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+    .week-number { color: var(--accent); font-size: 13px; font-weight: 800; }
+    .complete-control { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; }
+    .complete-control input { width: 20px; height: 20px; accent-color: var(--accent); }
+    .week-card h3 { margin-bottom: 12px; font-size: 22px; line-height: 1.25; }
+    .week-card dl { margin: 0; }
+    .week-card dt { margin-top: 12px; color: var(--muted); font-size: 12px; font-weight: 800; }
+    .week-card dd { margin-left: 0; font-size: 14px; }
+
+    .manifesto {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+      gap: clamp(36px, 7vw, 92px);
+      align-items: center;
+    }
+    .manifesto img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: var(--radius); filter: saturate(0.58); }
+    .manifesto blockquote { margin: 0; font-size: clamp(30px, 4.2vw, 58px); line-height: 1.08; letter-spacing: -0.045em; font-weight: 710; }
+    .manifesto p { margin-top: 22px; color: var(--muted); }
+
+    .tracks-layout { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 14px; }
+    .track-card {
+      padding: clamp(26px, 4vw, 46px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+    }
+    .track-card:first-child { grid-row: span 2; background: var(--accent); color: var(--on-accent); }
+    .track-card:first-child p { color: color-mix(in srgb, var(--on-accent) 78%, transparent); }
+    .track-card h3 { margin-bottom: 10px; font-size: 28px; }
+    .track-card p { margin-bottom: 22px; color: var(--muted); }
+    .track-card ul { padding: 0; margin: 0; list-style: none; display: grid; gap: 10px; }
+    .track-card li { padding-left: 18px; position: relative; }
+    .track-card li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 7px; height: 7px; border-radius: 3px; background: currentColor; }
+
+    .graduation {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.7fr) 1fr;
+      gap: clamp(34px, 7vw, 100px);
+      align-items: start;
+    }
+    .score { position: sticky; top: 108px; }
+    .score strong { display: block; color: var(--accent); font-size: clamp(86px, 12vw, 160px); line-height: 0.85; letter-spacing: -0.075em; }
+    .score span { color: var(--muted); }
+    .rubric { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .rubric-item { min-height: 150px; padding: 24px; border-radius: var(--radius); background: var(--surface-strong); }
+    .rubric-item strong { display: block; margin-bottom: 8px; font-size: 26px; }
+    .rubric-item p { margin: 0; color: var(--muted); }
+    .fail-rule { grid-column: 1 / -1; border: 1px solid var(--accent); background: var(--accent-soft); }
+
+    .final-cta {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 28px;
+      align-items: center;
+      padding: clamp(32px, 6vw, 72px);
+      border-radius: var(--radius);
+      background: var(--accent);
+      color: var(--on-accent);
+    }
+    .final-cta h2 { max-width: 12ch; margin-bottom: 10px; }
+    .final-cta p { margin-bottom: 0; color: color-mix(in srgb, var(--on-accent) 78%, transparent); }
+    .final-cta .button { border-color: var(--on-accent); background: var(--on-accent); color: var(--accent-strong); }
+
+    footer { padding-block: 34px; color: var(--muted); font-size: 13px; }
+    .footer-row { display: flex; justify-content: space-between; gap: 24px; border-top: 1px solid var(--line); padding-top: 26px; }
+    .footer-row p { margin: 0; }
+    .footer-row a:hover { color: var(--text); }
+    noscript { display: block; padding: 16px; border: 1px solid var(--line); background: var(--surface); }
+
+    .motion-ready .reveal { opacity: 0; transform: translateY(18px); }
+    .motion-ready .reveal.is-visible { opacity: 1; transform: translateY(0); transition: opacity 600ms ease, transform 600ms cubic-bezier(0.16, 1, 0.3, 1); }
+
+    @media (max-width: 900px) {
+      .hero { min-height: auto; grid-template-columns: 1fr; }
+      .hero-copy { padding-top: 24px; }
+      h1 { max-width: 12ch; }
+      .metrics { grid-template-columns: repeat(2, 1fr); }
+      .manifesto, .graduation { grid-template-columns: 1fr; }
+      .manifesto img { order: 2; }
+      .score { position: static; }
+      .tracks-layout { grid-template-columns: 1fr; }
+      .track-card:first-child { grid-row: auto; }
+    }
+
+    @media (max-width: 767px) {
+      .shell { width: min(calc(100% - 28px), var(--max)); }
+      .nav-links a { display: none; }
+      .nav-links { gap: 8px; }
+      .hero { display: flex; flex-direction: column; gap: 38px; padding-block: 42px 72px; }
+      .hero-copy, .hero-media { width: 100%; }
+      h1 { font-size: clamp(48px, 14vw, 66px); }
+      .actions { flex-direction: column; }
+      .button { width: 100%; }
+      .metrics { grid-template-columns: repeat(2, 1fr); }
+      .metric { padding: 20px 10px 20px 0; }
+      .planner { padding: 18px; }
+      .planner-top { grid-template-columns: 1fr; align-items: start; }
+      .progress-readout { text-align: left; }
+      .track-switcher { grid-template-columns: 1fr; }
+      .phase-panel-header { grid-template-columns: 1fr; gap: 8px; }
+      .weeks-grid { grid-template-columns: 1fr; }
+      .week-card { min-height: auto; }
+      .manifesto { display: flex; flex-direction: column; }
+      .tracks-layout { display: flex; flex-direction: column; }
+      .rubric { grid-template-columns: 1fr; }
+      .fail-rule { grid-column: auto; }
+      .final-cta { grid-template-columns: 1fr; }
+      .footer-row { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+      .motion-ready .reveal { opacity: 1; transform: none; }
+    }
+
+    @media (prefers-reduced-transparency: reduce) {
+      .nav-wrap { background: var(--bg); backdrop-filter: none; -webkit-backdrop-filter: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <header class="nav-wrap">
+    <nav class="shell" aria-label="主导航">
+      <a class="brand" href="#top">
+        <span class="brand-mark" aria-hidden="true">Q24</span>
+        <span>量化学习路线</span>
+      </a>
+      <div class="nav-links">
+        <a href="#roadmap">路线</a>
+        <a href="#tracks">分支</a>
+        <a href="#graduation">毕业标准</a>
+        <button class="theme-toggle" id="theme-toggle" type="button">切换主题</button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero shell" id="top">
+      <div class="hero-copy reveal">
+        <p class="eyebrow">从零到独立研究</p>
+        <h1>24 周，学会可信量化研究</h1>
+        <p>每周 8-10 小时，从 Python 基础走到可复现研究、风险评估和纸上交易。</p>
+        <div class="actions">
+          <a class="button" href="#roadmap">开始规划</a>
+          <a class="button secondary" href="https://github.com/Zchary1106/quant-learning-roadmap" rel="noopener">打开资料库</a>
+        </div>
+      </div>
+      <figure class="hero-media reveal">
+        <img src="assets/market-research.jpg" width="1800" height="1200" alt="市场数据图表显示在多台研究屏幕上">
+        <figcaption>先建立证据，再谈策略。</figcaption>
+      </figure>
+    </section>
+
+    <div class="metrics shell reveal" aria-label="课程关键数据">
+      <div class="metric"><strong>24</strong><span>周系统路线</span></div>
+      <div class="metric"><strong>6</strong><span>个学习阶段</span></div>
+      <div class="metric"><strong>8</strong><span>个可运行实验</span></div>
+      <div class="metric"><strong>20</strong><span>项自动测试</span></div>
+    </div>
+
+    <section class="section-space shell" id="roadmap">
+      <div class="section-head reveal">
+        <h2>先选方向，再按周推进</h2>
+        <p>前 16 周共用基础，第 17 周开始分流。完成状态仅保存在你的浏览器中。</p>
+      </div>
+      <div class="planner reveal">
+        <div class="planner-top">
+          <div>
+            <h3>你的学习计划</h3>
+            <p class="lead" id="track-description">适合因子、资产配置与中低频策略研究。</p>
+          </div>
+          <div class="progress-readout" aria-live="polite">
+            <strong id="progress-count">0 / 24</strong>
+            <span>已完成周数</span>
+          </div>
+        </div>
+        <div class="track-switcher" role="group" aria-label="选择学习方向">
+          <button class="track-button" type="button" data-track="research" aria-pressed="true">研究型</button>
+          <button class="track-button" type="button" data-track="engineering" aria-pressed="false">工程型</button>
+          <button class="track-button" type="button" data-track="ml" aria-pressed="false">机器学习型</button>
+        </div>
+        <div class="phase-tabs" role="tablist" aria-label="学习阶段" id="phase-tabs"></div>
+        <div class="phase-panel" id="phase-panel" role="tabpanel" aria-live="polite"></div>
+        <noscript>交互路线需要 JavaScript。你仍可在 GitHub 仓库中阅读 `01_学习路线/24周学习路线.md`。</noscript>
+      </div>
+    </section>
+
+    <section class="section-space shell manifesto reveal" aria-labelledby="evidence-title">
+      <img src="assets/data-analysis.jpg" width="1400" height="933" loading="lazy" alt="研究屏幕展示数据分析图表">
+      <div>
+        <blockquote id="evidence-title">漂亮曲线不是终点，可信证据才是。</blockquote>
+        <p>每个策略都要经过时间对齐、基准比较、成本敏感性、样本外验证和失效分析。</p>
+      </div>
+    </section>
+
+    <section class="section-space shell" id="tracks">
+      <div class="section-head reveal">
+        <h2>三条路线，共享一套底线</h2>
+        <p>无论选择哪条方向，都不能跳过数据质量、时间切分、交易成本和风险边界。</p>
+      </div>
+      <div class="tracks-layout reveal">
+        <article class="track-card">
+          <h3>研究型</h3>
+          <p>默认路线。适合因子、资产配置和中低频策略。</p>
+          <ul>
+            <li>因子中性化与衰减</li>
+            <li>多资产组合构建</li>
+            <li>容量、归因与稳健性</li>
+          </ul>
+        </article>
+        <article class="track-card">
+          <h3>工程型</h3>
+          <p>适合回测、行情、订单和实盘基础设施。</p>
+          <ul>
+            <li>事件总线与领域模型</li>
+            <li>订单状态机与撮合</li>
+            <li>重放、幂等、监控与恢复</li>
+          </ul>
+        </article>
+        <article class="track-card">
+          <h3>机器学习型</h3>
+          <p>适合预测、排序与时间感知特征管道。</p>
+          <ul>
+            <li>滚动验证与泄漏防线</li>
+            <li>排序、校准与稳定性</li>
+            <li>和简单基准做增量比较</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-space shell" id="graduation">
+      <div class="section-head reveal">
+        <h2>毕业不是看完，是可以复现</h2>
+        <p>满分 100 分，任何前视偏差、隐藏失败或无法重跑都会直接否决。</p>
+      </div>
+      <div class="graduation reveal">
+        <div class="score"><strong>100</strong><span>毕业项目总分</span></div>
+        <div class="rubric">
+          <div class="rubric-item"><strong>15</strong><p>数据可追溯</p></div>
+          <div class="rubric-item"><strong>20</strong><p>无泄漏与正确对齐</p></div>
+          <div class="rubric-item"><strong>15</strong><p>基准与样本外</p></div>
+          <div class="rubric-item"><strong>15</strong><p>费用、滑点与容量</p></div>
+          <div class="rubric-item"><strong>15</strong><p>风险与失效分析</p></div>
+          <div class="rubric-item"><strong>20</strong><p>代码复现、测试与结论边界</p></div>
+          <div class="rubric-item fail-rule"><strong>硬性否决</strong><p>使用未来数据、隐藏失败窗口、只报最优参数、无法重跑，或把模拟收益描述为保证收益。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-space shell reveal">
+      <div class="final-cta">
+        <div>
+          <h2>从第 1 周开始</h2>
+          <p>先完成入学诊断，再创建第一个可复现环境。</p>
+        </div>
+        <a class="button" href="https://github.com/Zchary1106/quant-learning-roadmap/blob/main/00_%E5%BC%80%E5%A7%8B/%E5%85%A5%E5%AD%A6%E8%AF%8A%E6%96%AD%E4%B8%8E%E6%96%B9%E5%90%91%E9%80%89%E6%8B%A9.md" rel="noopener">打开入学诊断</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="shell">
+    <div class="footer-row">
+      <p>仅用于教育与技术研究，不构成投资建议。</p>
+      <p><a href="https://github.com/Zchary1106/quant-learning-roadmap">GitHub 资料库</a> | 图片来源遵循 <a href="https://unsplash.com/license">Unsplash License</a></p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      "use strict";
+
+      var phases = [
+        {
+          name: "工具与语言",
+          range: "第 1-4 周",
+          summary: "搭好环境，掌握 Python 数据栈和收益指标。",
+          weeks: [
+            [1, "Python、终端、Git", "完成函数、文件与环境练习", "环境可重复创建，完成 20 道小题"],
+            [2, "NumPy、pandas、可视化", "清洗 OHLCV 并绘图", "数据字典、缺失报告和 3 张图"],
+            [3, "收益与绩效指标", "运行 lab_01_metrics.py", "手算与代码一致，解释年化假设"],
+            [4, "SQL 与数据分层", "运行 Lab 5 并完成 5 个查询", "形成 raw、clean、features 三层数据"]
+          ]
+        },
+        {
+          name: "数学与金融",
+          range: "第 5-8 周",
+          summary: "建立概率、回归、时间序列与市场机制基础。",
+          weeks: [
+            [5, "概率、抽样、置信区间", "模拟收益均值的不确定性", "不同样本量的区间图与解释"],
+            [6, "线代、回归、正则化", "用指数收益解释资产收益", "系数、残差诊断和样本外误差"],
+            [7, "时间序列与平稳性", "完成 ACF 与滚动统计", "解释价格回归为什么容易伪相关"],
+            [8, "市场、订单与复权", "完成买入持有基准研究", "报告分红、费用和交易日处理"]
+          ]
+        },
+        {
+          name: "研究与回测",
+          range: "第 9-12 周",
+          summary: "把假设写成无前视、含成本、可检验的回测。",
+          weeks: [
+            [9, "研究问题与基准", "写趋势策略预注册", "先冻结假设、参数范围和停止条件"],
+            [10, "向量化回测", "完成滞后一日的均线策略", "和本地最小回测器结果一致"],
+            [11, "成本、容量与换手", "测试 0、5、10、20bp 成本", "成本曲线和盈亏平衡成本"],
+            [12, "滚动验证与过拟合", "运行 Lab 6 和 Lab 8", "多个样本外窗口与不确定性区间"]
+          ]
+        },
+        {
+          name: "策略与组合",
+          range: "第 13-16 周",
+          summary: "从单一信号走向因子、组合与风险预算。",
+          weeks: [
+            [13, "趋势、动量与均值回归", "同数据比较两类策略", "解释适用状态和失效机制"],
+            [14, "因子研究", "计算 IC 与分组收益", "暴露、换手和覆盖率分析"],
+            [15, "组合构建", "比较三种权重方法", "权重约束、再平衡和集中度"],
+            [16, "风险管理", "运行 Lab 7 并扩展情景", "风险贡献、尾部风险和停机规则"]
+          ]
+        },
+        {
+          name: "分支深化",
+          range: "第 17-20 周",
+          summary: "围绕研究、工程或机器学习形成专长。",
+          tracks: {
+            research: [
+              [17, "因子中性化", "处理行业和市值暴露", "中性化前后完整对比"],
+              [18, "多资产配置", "构建跨资产风险预算", "权重稳定性与约束说明"],
+              [19, "因子衰减与容量", "研究持有期和规模", "净收益、换手与容量边界"],
+              [20, "组合归因", "拆解策略和因子贡献", "解释收益与风险来源"]
+            ],
+            engineering: [
+              [17, "事件总线与领域模型", "定义行情、信号和订单事件", "事件边界和时间语义清楚"],
+              [18, "订单状态机与撮合", "处理部分成交与拒单", "状态转换测试覆盖异常路径"],
+              [19, "重放、幂等与恢复", "注入重复事件和重启", "账本可以确定性恢复"],
+              [20, "监控与审计", "设计告警和人工接管", "风险超限时系统安全关闭"]
+            ],
+            ml: [
+              [17, "时间感知特征管道", "按可见时间构造特征", "预处理只在训练窗拟合"],
+              [18, "滚动验证与隔离", "实现 purge 和 embargo 思想", "标签边界没有信息重叠"],
+              [19, "排序、校准与稳定性", "比较多个时间窗口", "指标、换手和漂移一起报告"],
+              [20, "增量价值", "和规则、线性基准比较", "复杂模型证明样本外增量"]
+            ]
+          }
+        },
+        {
+          name: "毕业项目",
+          range: "第 21-24 周",
+          summary: "冻结设计，完成测试、稳健性和可复现交付。",
+          weeks: [
+            [21, "冻结研究设计", "确定数据、基准、切分和成本", "研究预注册不再随结果改写"],
+            [22, "实现与测试", "完成数据检查和首轮回测", "测试、失败记录和运行说明"],
+            [23, "稳健性与风险", "完成成本、参数和压力测试", "样本外与子区间结果完整"],
+            [24, "交付与复盘", "整理报告、代码和结果", "10 分钟讲解与纸上交易计划"]
+          ]
+        }
+      ];
+
+      var trackDescriptions = {
+        research: "适合因子、资产配置与中低频策略研究。",
+        engineering: "适合构建回测、行情、订单和交易基础设施。",
+        ml: "适合预测、排序与时间感知机器学习研究。"
+      };
+      var selectedTrack = localStorage.getItem("quant-route-track") || "research";
+      var selectedPhase = 0;
+      var completed = {};
+      try { completed = JSON.parse(localStorage.getItem("quant-route-progress") || "{}"); } catch (error) { completed = {}; }
+
+      var phaseTabs = document.getElementById("phase-tabs");
+      var phasePanel = document.getElementById("phase-panel");
+      var progressCount = document.getElementById("progress-count");
+      var trackDescription = document.getElementById("track-description");
+
+      function updateProgress() {
+        var count = Object.keys(completed).filter(function (key) { return completed[key]; }).length;
+        progressCount.textContent = count + " / 24";
+      }
+
+      function renderTabs() {
+        phaseTabs.replaceChildren();
+        phases.forEach(function (phase, index) {
+          var button = document.createElement("button");
+          button.type = "button";
+          button.className = "phase-tab";
+          button.id = "phase-tab-" + index;
+          button.setAttribute("role", "tab");
+          button.setAttribute("aria-selected", String(index === selectedPhase));
+          button.setAttribute("aria-controls", "phase-panel");
+          button.tabIndex = index === selectedPhase ? 0 : -1;
+          button.textContent = phase.range;
+          button.addEventListener("click", function () {
+            selectedPhase = index;
+            renderTabs();
+            renderPhase();
+          });
+          phaseTabs.appendChild(button);
+        });
+      }
+
+      function makeText(tag, className, value) {
+        var element = document.createElement(tag);
+        if (className) element.className = className;
+        element.textContent = value;
+        return element;
+      }
+
+      function renderPhase() {
+        var phase = phases[selectedPhase];
+        var weeks = phase.tracks ? phase.tracks[selectedTrack] : phase.weeks;
+        phasePanel.replaceChildren();
+        phasePanel.setAttribute("aria-labelledby", "phase-tab-" + selectedPhase);
+
+        var header = document.createElement("div");
+        header.className = "phase-panel-header";
+        var titleBox = document.createElement("div");
+        titleBox.appendChild(makeText("h3", "", phase.name));
+        titleBox.appendChild(makeText("p", "", phase.range));
+        header.appendChild(titleBox);
+        header.appendChild(makeText("p", "", phase.summary));
+        phasePanel.appendChild(header);
+
+        var grid = document.createElement("div");
+        grid.className = "weeks-grid";
+        weeks.forEach(function (week) {
+          var card = document.createElement("article");
+          card.className = "week-card" + (completed[String(week[0])] ? " is-complete" : "");
+          var label = document.createElement("div");
+          label.className = "week-label";
+          label.appendChild(makeText("span", "week-number", "第 " + week[0] + " 周"));
+
+          var control = document.createElement("label");
+          control.className = "complete-control";
+          var checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.checked = Boolean(completed[String(week[0])]);
+          checkbox.setAttribute("aria-label", "标记第 " + week[0] + " 周完成");
+          checkbox.addEventListener("change", function () {
+            completed[String(week[0])] = checkbox.checked;
+            localStorage.setItem("quant-route-progress", JSON.stringify(completed));
+            card.classList.toggle("is-complete", checkbox.checked);
+            updateProgress();
+          });
+          control.appendChild(checkbox);
+          control.appendChild(document.createTextNode("已完成"));
+          label.appendChild(control);
+          card.appendChild(label);
+          card.appendChild(makeText("h3", "", week[1]));
+
+          var detail = document.createElement("dl");
+          detail.appendChild(makeText("dt", "", "动手任务"));
+          detail.appendChild(makeText("dd", "", week[2]));
+          detail.appendChild(makeText("dt", "", "验收证据"));
+          detail.appendChild(makeText("dd", "", week[3]));
+          card.appendChild(detail);
+          grid.appendChild(card);
+        });
+        phasePanel.appendChild(grid);
+      }
+
+      document.querySelectorAll(".track-button").forEach(function (button) {
+        button.setAttribute("aria-pressed", String(button.dataset.track === selectedTrack));
+        button.addEventListener("click", function () {
+          selectedTrack = button.dataset.track;
+          localStorage.setItem("quant-route-track", selectedTrack);
+          document.querySelectorAll(".track-button").forEach(function (item) {
+            item.setAttribute("aria-pressed", String(item.dataset.track === selectedTrack));
+          });
+          trackDescription.textContent = trackDescriptions[selectedTrack];
+          if (selectedPhase === 4) renderPhase();
+        });
+      });
+
+      trackDescription.textContent = trackDescriptions[selectedTrack];
+      renderTabs();
+      renderPhase();
+      updateProgress();
+
+      var themeToggle = document.getElementById("theme-toggle");
+      var storedTheme = localStorage.getItem("quant-route-theme");
+      if (storedTheme) document.documentElement.dataset.theme = storedTheme;
+      themeToggle.addEventListener("click", function () {
+        var current = document.documentElement.dataset.theme;
+        var darkBySystem = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        var next = current === "dark" || (!current && darkBySystem) ? "light" : "dark";
+        document.documentElement.dataset.theme = next;
+        localStorage.setItem("quant-route-theme", next);
+      });
+
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        document.documentElement.classList.add("motion-ready");
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12 });
+        document.querySelectorAll(".reveal").forEach(function (element) { observer.observe(element); });
+      }
+    }());
+  </script>
+</body>
+</html>
