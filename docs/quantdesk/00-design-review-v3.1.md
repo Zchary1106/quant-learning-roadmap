@@ -1,6 +1,6 @@
 # QuantDesk 数据源设计 v3.1 审查
 
-审查日期：2026-09-07  
+审查日期：2026-09-07
 审查输入：用户提供的 `quantdesk-data-sources-v3.1.json`
 
 ## 结论
