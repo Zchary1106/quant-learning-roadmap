@@ -10,6 +10,7 @@ from quantdesk.providers import (
     ProviderResponseError,
     ProviderTokenMissing,
     TushareProProvider,
+    compact_date_windows,
 )
 
 
@@ -23,6 +24,25 @@ class FakeTransport:
     ) -> Mapping[str, Any]:
         self.calls.append((url, payload, timeout_seconds))
         return self.response
+
+
+class WindowTransport:
+    def __init__(self) -> None:
+        self.calls: list[tuple[str, Mapping[str, Any], float]] = []
+
+    def post_json(
+        self, url: str, payload: Mapping[str, Any], *, timeout_seconds: float
+    ) -> Mapping[str, Any]:
+        self.calls.append((url, payload, timeout_seconds))
+        start = payload["params"]["start_date"]
+        return {
+            "code": 0,
+            "msg": "",
+            "data": {
+                "fields": ["ts_code", "trade_date", "close"],
+                "items": [["600000.SH", start, 10.0]],
+            },
+        }
 
 
 def successful_response() -> Mapping[str, Any]:
@@ -96,3 +116,44 @@ def test_malformed_provider_rows_are_rejected() -> None:
     provider = TushareProProvider(token="test-token", transport=transport)
     with pytest.raises(ProviderResponseError, match="has 1 values for 2 fields"):
         provider.query("daily")
+
+
+def test_compact_date_windows_are_inclusive_and_explicit() -> None:
+    assert compact_date_windows("20260901", "20260910", max_calendar_days=4) == (
+        ("20260901", "20260904"),
+        ("20260905", "20260908"),
+        ("20260909", "20260910"),
+    )
+    with pytest.raises(ValueError, match="end_date must not precede"):
+        compact_date_windows("20260910", "20260901", max_calendar_days=4)
+
+
+def test_daily_window_requests_merge_deterministically() -> None:
+    transport = WindowTransport()
+    provider = TushareProProvider(token="test-token", transport=transport)
+    result = provider.query_daily_windows(
+        ts_code="600000.SH",
+        start_date="20260901",
+        end_date="20260910",
+        fields=("ts_code", "trade_date", "close"),
+        max_calendar_days=4,
+    )
+    assert [row["trade_date"] for row in result.rows] == [
+        "20260901",
+        "20260905",
+        "20260909",
+    ]
+    assert [
+        call[1]["params"]["start_date"] for call in transport.calls
+    ] == ["20260901", "20260905", "20260909"]
+
+
+def test_daily_window_requests_require_time_series_identity_fields() -> None:
+    provider = TushareProProvider(token="test-token", transport=FakeTransport(successful_response()))
+    with pytest.raises(ValueError, match="must include ts_code and trade_date"):
+        provider.query_daily_windows(
+            ts_code="600000.SH",
+            start_date="20260901",
+            end_date="20260904",
+            fields=("close",),
+        )

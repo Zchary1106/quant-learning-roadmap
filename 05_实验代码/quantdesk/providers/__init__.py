@@ -9,7 +9,7 @@ from .base import (
     ProviderTransportError,
     QueryResult,
 )
-from .tushare import TushareProProvider
+from .tushare import TushareProProvider, compact_date_windows
 from .urllib_transport import UrllibJsonTransport
 
 __all__ = [
@@ -22,4 +22,5 @@ __all__ = [
     "QueryResult",
     "TushareProProvider",
     "UrllibJsonTransport",
+    "compact_date_windows",
 ]

@@ -1,0 +1,78 @@
+{
+  "stock_basic": {
+    "ts_code": "600000.SH",
+    "symbol": "600000",
+    "name": "浦发银行",
+    "exchange": "SSE",
+    "list_status": "L",
+    "list_date": "19991110",
+    "delist_date": ""
+  },
+  "trade_cal": {
+    "exchange": "SSE",
+    "cal_date": "20260904",
+    "is_open": "1",
+    "pretrade_date": "20260903"
+  },
+  "adj_factor": {
+    "ts_code": "600000.SH",
+    "trade_date": "20260904",
+    "adj_factor": 42.123
+  },
+  "dividend": {
+    "ts_code": "600000.SH",
+    "end_date": "20251231",
+    "ann_date": "20260320",
+    "imp_ann_date": "20260520",
+    "div_proc": "实施",
+    "stk_div": 0,
+    "cash_div": 0.28,
+    "cash_div_tax": 0.35,
+    "record_date": "20260610",
+    "ex_date": "20260611",
+    "pay_date": "20260611",
+    "div_listdate": ""
+  },
+  "stk_limit": {
+    "ts_code": "600000.SH",
+    "trade_date": "20260904",
+    "up_limit": 11.09,
+    "down_limit": 9.07
+  },
+  "suspend_d": {
+    "ts_code": "600000.SH",
+    "trade_date": "20260904",
+    "suspend_timing": "S",
+    "suspend_type": "停牌"
+  },
+  "stock_st": {
+    "ts_code": "600000.SH",
+    "name": "浦发银行",
+    "trade_date": "20260904",
+    "type": "S",
+    "type_name": "ST"
+  },
+  "daily_basic": {
+    "ts_code": "600000.SH",
+    "trade_date": "20260904",
+    "close": 10.35,
+    "total_share": 2935200.0,
+    "float_share": 2935200.0,
+    "free_share": null,
+    "total_mv": 30379320.0,
+    "circ_mv": 30379320.0
+  },
+  "index_member_all": {
+    "l1_code": "000300",
+    "l1_name": "沪深300",
+    "l2_code": "000300",
+    "l2_name": "沪深300",
+    "l3_code": "000300.SH",
+    "l3_name": "沪深300",
+    "ts_code": "600000.SH",
+    "name": "浦发银行",
+    "in_date": "20260101",
+    "out_date": "",
+    "is_new": "Y"
+  }
+}

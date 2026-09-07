@@ -166,6 +166,37 @@ class DailyBar:
 
 
 @dataclass(frozen=True)
+class AdjustmentFactor:
+    """Provider adjustment factor, never a replacement for a cash ledger."""
+
+    ts_code: str
+    trade_date: date
+    factor: float
+    availability: DataAvailability
+    source: SourceMetadata
+
+
+@dataclass(frozen=True)
+class DividendEvent:
+    """A provider dividend row with dates kept separate for later event logic."""
+
+    ts_code: str
+    end_date: Optional[date]
+    announcement_date: Optional[date]
+    implementation_announcement_date: Optional[date]
+    process_status: str
+    stock_dividend_per_share: Optional[float]
+    cash_dividend_after_tax_per_share: Optional[float]
+    cash_dividend_pre_tax_per_share: Optional[float]
+    record_date: Optional[date]
+    ex_date: Optional[date]
+    pay_date: Optional[date]
+    stock_list_date: Optional[date]
+    availability: DataAvailability
+    source: SourceMetadata
+
+
+@dataclass(frozen=True)
 class LimitBand:
     """Daily exchange price-limit band, not proof that an order can be filled."""
 
@@ -199,13 +230,43 @@ class SuspensionStatus:
 
 
 @dataclass(frozen=True)
+class SuspensionEvent:
+    """Raw S/R-style event record; it is not inferred as a complete daily state."""
+
+    ts_code: str
+    trade_date: date
+    timing_code: str
+    suspension_type: Optional[str]
+    availability: DataAvailability
+    source: SourceMetadata
+
+
+@dataclass(frozen=True)
 class StStatus:
     """Special-treatment state, retained as risk context rather than a fill rule."""
 
     ts_code: str
+    name: str
     trade_date: date
     is_st: bool
+    type_code: str
     label: str
+    availability: DataAvailability
+    source: SourceMetadata
+
+
+@dataclass(frozen=True)
+class DailyBasicRecord:
+    """Daily valuation/share data with documented units retained in field names."""
+
+    ts_code: str
+    trade_date: date
+    close: Optional[float]
+    total_share_ten_thousand: Optional[float]
+    float_share_ten_thousand: Optional[float]
+    free_share_raw: Optional[float]
+    total_market_value_ten_thousand_cny: Optional[float]
+    circulating_market_value_ten_thousand_cny: Optional[float]
     availability: DataAvailability
     source: SourceMetadata
 
@@ -218,6 +279,7 @@ class IndexMembership:
     ts_code: str
     in_date: date
     out_date: Optional[date]
+    is_current_membership_flag: bool
     availability: DataAvailability
     point_in_time_confidence: PointInTimeConfidence
     source: SourceMetadata

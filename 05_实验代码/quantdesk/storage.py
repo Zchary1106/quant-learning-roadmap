@@ -3,16 +3,23 @@
 from __future__ import annotations
 
 from collections.abc import Iterable, Mapping
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, fields, is_dataclass
 from datetime import datetime
+from enum import Enum
 import hashlib
 import json
 from pathlib import Path
 import sqlite3
-from typing import Any
+from typing import Any, Protocol
 
 from .contracts import DataAvailability, DailyBar, Exchange, SourceMetadata
 from .validation import validate_daily_bars
+
+
+class ReferenceRecord(Protocol):
+    """Minimal shape shared by typed non-daily normalized records."""
+
+    source: SourceMetadata
 
 
 @dataclass(frozen=True)
@@ -191,8 +198,85 @@ def _create_schema(connection: sqlite3.Connection) -> None:
 
         CREATE INDEX IF NOT EXISTS idx_daily_bars_snapshot_code_date
         ON daily_bars(snapshot_id, ts_code, trade_date);
+
+        CREATE TABLE IF NOT EXISTS reference_records (
+            snapshot_id TEXT NOT NULL,
+            endpoint TEXT NOT NULL,
+            record_key TEXT NOT NULL,
+            record_type TEXT NOT NULL,
+            record_json TEXT NOT NULL,
+            record_sha256 TEXT NOT NULL,
+            PRIMARY KEY (snapshot_id, endpoint, record_key),
+            FOREIGN KEY (snapshot_id) REFERENCES snapshots(snapshot_id)
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_reference_records_snapshot_endpoint
+        ON reference_records(snapshot_id, endpoint);
         """
     )
+
+
+def _json_value(value: Any) -> Any:
+    if isinstance(value, Enum):
+        return value.value
+    if isinstance(value, datetime):
+        return value.isoformat()
+    if hasattr(value, "isoformat"):
+        return value.isoformat()
+    if is_dataclass(value):
+        return {field.name: _json_value(getattr(value, field.name)) for field in fields(value)}
+    if isinstance(value, Mapping):
+        return {str(key): _json_value(item) for key, item in value.items()}
+    if isinstance(value, (tuple, list)):
+        return [_json_value(item) for item in value]
+    return value
+
+
+def _reference_record_key(record: ReferenceRecord) -> str:
+    record_type = type(record).__name__
+    values = vars(record)
+    candidates = (
+        "index_code",
+        "ts_code",
+        "exchange",
+        "session_date",
+        "trade_date",
+        "in_date",
+        "out_date",
+        "announcement_date",
+        "ex_date",
+        "timing_code",
+        "type_code",
+        "process_status",
+    )
+    parts = [record_type]
+    for name in candidates:
+        if name in values and values[name] is not None:
+            parts.append(f"{name}={_json_value(values[name])}")
+    if len(parts) == 1:
+        raise ValueError(f"cannot derive immutable reference key for {record_type}")
+    return "|".join(parts)
+
+
+def _ensure_snapshot(connection: sqlite3.Connection, source: SourceMetadata) -> None:
+    existing_snapshot = connection.execute(
+        "SELECT provider, endpoint, source_url, source_retrieved_at "
+        "FROM snapshots WHERE snapshot_id = ?",
+        (source.snapshot_id,),
+    ).fetchone()
+    snapshot_values = (
+        source.provider,
+        source.endpoint,
+        source.source_url,
+        source.retrieved_at.isoformat(),
+    )
+    if existing_snapshot is None:
+        connection.execute(
+            "INSERT INTO snapshots VALUES (?, ?, ?, ?, ?)",
+            (source.snapshot_id, *snapshot_values),
+        )
+    elif existing_snapshot != snapshot_values:
+        raise ValueError("snapshot_id already exists with different source metadata")
 
 
 def write_daily_bars(
@@ -216,24 +300,7 @@ def write_daily_bars(
         connection.execute("PRAGMA foreign_keys = ON")
         _create_schema(connection)
         source = records[0].source
-        existing_snapshot = connection.execute(
-            "SELECT provider, endpoint, source_url, source_retrieved_at "
-            "FROM snapshots WHERE snapshot_id = ?",
-            (source.snapshot_id,),
-        ).fetchone()
-        snapshot_values = (
-            source.provider,
-            source.endpoint,
-            source.source_url,
-            source.retrieved_at.isoformat(),
-        )
-        if existing_snapshot is None:
-            connection.execute(
-                "INSERT INTO snapshots VALUES (?, ?, ?, ?, ?)",
-                (source.snapshot_id, *snapshot_values),
-            )
-        elif existing_snapshot != snapshot_values:
-            raise ValueError("snapshot_id already exists with different source metadata")
+        _ensure_snapshot(connection, source)
 
         for bar in records:
             if bar.source != source:
@@ -281,6 +348,81 @@ def write_daily_bars(
                 ),
             )
     return records
+
+
+def write_reference_records(
+    records: Iterable[ReferenceRecord], database: str | Path
+) -> list[ReferenceRecord]:
+    """Append typed non-daily records without losing snapshot provenance.
+
+    A repeated normalized record is idempotent. Reusing a logical record key
+    inside the same immutable snapshot with different contents is rejected.
+    """
+    normalized = list(records)
+    if not normalized:
+        raise ValueError("at least one reference record is required")
+    sources = {record.source for record in normalized}
+    if len(sources) != 1:
+        raise ValueError("one write may contain records from exactly one source snapshot")
+    source = next(iter(sources))
+    if any(record.source.endpoint != source.endpoint for record in normalized):
+        raise ValueError("all records in a write must share endpoint metadata")
+
+    database_path = Path(database)
+    database_path.parent.mkdir(parents=True, exist_ok=True)
+    with sqlite3.connect(database_path) as connection:
+        connection.execute("PRAGMA foreign_keys = ON")
+        _create_schema(connection)
+        _ensure_snapshot(connection, source)
+        for record in normalized:
+            record_key = _reference_record_key(record)
+            payload = _json_value(record)
+            serialized = _canonical_json_bytes(payload)
+            record_hash = hashlib.sha256(serialized).hexdigest()
+            existing = connection.execute(
+                "SELECT record_sha256 FROM reference_records "
+                "WHERE snapshot_id = ? AND endpoint = ? AND record_key = ?",
+                (source.snapshot_id, source.endpoint, record_key),
+            ).fetchone()
+            if existing is not None:
+                if existing[0] != record_hash:
+                    raise ValueError(
+                        "immutable reference record already exists with different contents: "
+                        f"{source.snapshot_id}/{source.endpoint}/{record_key}"
+                    )
+                continue
+            connection.execute(
+                "INSERT INTO reference_records VALUES (?, ?, ?, ?, ?, ?)",
+                (
+                    source.snapshot_id,
+                    source.endpoint,
+                    record_key,
+                    type(record).__name__,
+                    serialized.decode("utf-8"),
+                    record_hash,
+                ),
+            )
+    return normalized
+
+
+def read_reference_records(
+    database: str | Path, *, snapshot_id: str, endpoint: str
+) -> list[dict[str, Any]]:
+    """Read JSON-safe reference records for one fixed source snapshot and endpoint."""
+    with sqlite3.connect(database) as connection:
+        rows = connection.execute(
+            "SELECT record_key, record_type, record_json FROM reference_records "
+            "WHERE snapshot_id = ? AND endpoint = ? ORDER BY record_key",
+            (snapshot_id, endpoint),
+        ).fetchall()
+    return [
+        {
+            "record_key": record_key,
+            "record_type": record_type,
+            "record": json.loads(record_json),
+        }
+        for record_key, record_type, record_json in rows
+    ]
 
 
 def read_daily_bars(

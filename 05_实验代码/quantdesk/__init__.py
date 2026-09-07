@@ -15,6 +15,7 @@ from .contracts import (
 )
 from .normalize import normalize_daily_bar, raw_daily_bar_from_tushare
 from .research import bars_to_ohlcv_frame, bars_to_research_frame
+from .storage import read_reference_records, write_reference_records
 from .tradability import assess_daily_tradability
 from .universe import build_index_universe, require_verified_point_in_time
 from .validation import validate_daily_bars
@@ -34,6 +35,8 @@ __all__ = [
     "build_index_universe",
     "normalize_daily_bar",
     "raw_daily_bar_from_tushare",
+    "read_reference_records",
     "require_verified_point_in_time",
+    "write_reference_records",
     "validate_daily_bars",
 ]

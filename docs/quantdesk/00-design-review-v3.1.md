@@ -34,11 +34,24 @@ QuantDesk MVP 的定位是**离线优先的日频研究数据底座**。它不�
 6. Tushare Token 只在进程环境变量中读取，永不写入仓库、manifest、异常或审计对象。
 7. 当前官方 Python 客户端资料显示其 Pro API 使用 HTTP endpoint。QuantDesk 的 stdlib transport 默认拒绝 HTTP；真实调用需要使用者显式选择 `--allow-insecure-http`。
 
+## 2026-09-07 增量实现
+
+除 `daily` 外，当前实现已对以下设计端点增加 provider-shaped fixture 与显式字段解析：`stock_basic`、`trade_cal`、`adj_factor`、`dividend`、`stk_limit`、`suspend_d`、`stock_st`、`daily_basic`、`index_member_all`。
+
+这些解析器只承认 v3.1 已说明的字段与单位，不会：
+
+- 把 `stock_basic` 当前行业或状态解释为完整 PIT 历史；
+- 把 `free_share` 转换到未验证的单位；
+- 从 `suspend_d` 单行事件推断完整日内停复牌状态；
+- 将未经实际 schema 核验的 `stock_st.type` 映射为交易规则；
+- 将 `index_member_all` 的有效区间升级为 PIT 已验证；
+- 将 `adj_factor` 替代公司行动现金和股票账本。
+
 ## 未完成且不能伪称已完成的事项
 
 - 真实 Tushare 账号权限、历史覆盖、额度、限流和许可尚未验证；
 - 没有经过认证的生产数据快照；
-- `adj_factor`、分红、ST、停复牌和成分股端点尚未完成端到端标准化/落库；
+- `adj_factor`、分红、ST、停复牌和成分股已支持 fixture 驱动的标准化/版本化落库，但尚未用真实认证数据验证；
 - 历史成分、行业、ST 与公司行动是否满足完整 PIT 仍需数据证据；
 - 没有撮合、券商接入、真实仓位、订单、资金或账户功能。
 

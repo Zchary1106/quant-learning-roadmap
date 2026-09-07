@@ -11,6 +11,7 @@ from __future__ import annotations
 import os
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
+from datetime import date, datetime, timedelta
 from typing import Any
 
 from .base import (
@@ -141,6 +142,66 @@ class TushareProProvider:
             ) from error
         return self._parse_response(endpoint, response)
 
+    def query_daily_windows(
+        self,
+        *,
+        ts_code: str,
+        start_date: str,
+        end_date: str,
+        fields: Sequence[str],
+        max_calendar_days: int = 1_000,
+    ) -> QueryResult:
+        """Fetch a single security's daily rows in explicit calendar-day windows.
+
+        The provider's documented row limit is not a guarantee about every
+        response. This helper keeps each request bounded, validates a stable
+        schema across windows, and rejects conflicting duplicate keys. It does
+        not infer a trading calendar or claim that empty windows mean suspension.
+        """
+        if not fields:
+            raise ValueError("daily window queries require explicit fields")
+        if "ts_code" not in fields or "trade_date" not in fields:
+            raise ValueError("daily window fields must include ts_code and trade_date")
+
+        combined_rows: dict[tuple[str, str], Mapping[str, Any]] = {}
+        expected_fields: tuple[str, ...] | None = None
+        for window_start, window_end in compact_date_windows(
+            start_date, end_date, max_calendar_days=max_calendar_days
+        ):
+            result = self.query(
+                "daily",
+                parameters={
+                    "ts_code": ts_code,
+                    "start_date": window_start,
+                    "end_date": window_end,
+                },
+                fields=fields,
+            )
+            if expected_fields is None:
+                expected_fields = result.fields
+            elif result.fields != expected_fields:
+                raise ProviderResponseError(
+                    "Tushare daily window response fields changed between requests"
+                )
+            for row in result.rows:
+                key = (str(row["ts_code"]), str(row["trade_date"]))
+                existing = combined_rows.get(key)
+                if existing is not None and dict(existing) != dict(row):
+                    raise ProviderResponseError(
+                        "Tushare daily windows returned conflicting duplicate row "
+                        f"for {key[0]}/{key[1]}"
+                    )
+                combined_rows[key] = row
+
+        return QueryResult(
+            endpoint="daily",
+            fields=expected_fields or tuple(fields),
+            rows=tuple(
+                combined_rows[key]
+                for key in sorted(combined_rows, key=lambda item: (item[1], item[0]))
+            ),
+        )
+
     def _parse_response(self, endpoint: str, response: Mapping[str, Any]) -> QueryResult:
         body = require_mapping(response, "Tushare response")
         code = body.get("code")
@@ -169,3 +230,26 @@ class TushareProProvider:
                 )
             rows.append(dict(zip(normalized_fields, values)))
         return QueryResult(endpoint=endpoint, fields=normalized_fields, rows=tuple(rows))
+
+
+def compact_date_windows(
+    start_date: str, end_date: str, *, max_calendar_days: int
+) -> tuple[tuple[str, str], ...]:
+    """Split inclusive YYYYMMDD bounds without assuming a trading calendar."""
+    if max_calendar_days <= 0:
+        raise ValueError("max_calendar_days must be positive")
+    try:
+        start = datetime.strptime(start_date, "%Y%m%d").date()
+        end = datetime.strptime(end_date, "%Y%m%d").date()
+    except ValueError as error:
+        raise ValueError("date windows must use YYYYMMDD format") from error
+    if end < start:
+        raise ValueError("end_date must not precede start_date")
+
+    windows: list[tuple[str, str]] = []
+    window_start = start
+    while window_start <= end:
+        window_end = min(window_start + timedelta(days=max_calendar_days - 1), end)
+        windows.append((window_start.strftime("%Y%m%d"), window_end.strftime("%Y%m%d")))
+        window_start = window_end + timedelta(days=1)
+    return tuple(windows)

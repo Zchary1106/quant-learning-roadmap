@@ -28,6 +28,12 @@ python labs/lab_10_live_tushare_health_check.py --live --allow-insecure-http
 
 该检查只读取一个小范围的 `daily` 响应，并比对字段 schema。它不是批量下载，不证明历史完整性，也不能打开真实交易功能。
 
+## 日线分窗
+
+`TushareProProvider.query_daily_windows()` 面向单个证券的显式日期范围，将请求按固定日历天数拆分。每个窗口必须使用一致字段，合并时按 `(ts_code, trade_date)` 去重；同键返回不同数据会拒绝。
+
+它不把日历天数误认为交易日数量，也不把空窗口解释为停牌或数据完整。真实账户的行数上限和速率仍应通过小范围健康检查确认。
+
 ## 验收记录模板
 
 完成真实调用后，把以下内容写入独立的、不可含 Token 的数据卡：
