@@ -1,0 +1,25 @@
+"""Provider contracts and offline-first adapters."""
+
+from .base import (
+    DataProviderError,
+    ProviderPermissionDenied,
+    ProviderResponseError,
+    ProviderTokenMissing,
+    ProviderTransport,
+    ProviderTransportError,
+    QueryResult,
+)
+from .tushare import TushareProProvider
+from .urllib_transport import UrllibJsonTransport
+
+__all__ = [
+    "DataProviderError",
+    "ProviderPermissionDenied",
+    "ProviderResponseError",
+    "ProviderTokenMissing",
+    "ProviderTransport",
+    "ProviderTransportError",
+    "QueryResult",
+    "TushareProProvider",
+    "UrllibJsonTransport",
+]

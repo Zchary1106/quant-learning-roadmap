@@ -1,8 +1,15 @@
 .DS_Store
+.env
+.env.*
+!.env.example
 05_实验代码/.venv/
 05_实验代码/.pytest_cache/
 05_实验代码/**/*.egg-info/
 05_实验代码/**/__pycache__/
 05_实验代码/data/processed/*
 !05_实验代码/data/processed/.gitkeep
+05_实验代码/data/quantdesk/raw/*
+!05_实验代码/data/quantdesk/raw/.gitkeep
+05_实验代码/data/quantdesk/research/*
+!05_实验代码/data/quantdesk/research/.gitkeep
 *.pyc

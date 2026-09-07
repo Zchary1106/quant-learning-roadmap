@@ -20,4 +20,4 @@ testpaths = ["tests"]
 addopts = "-ra"
 
 [tool.setuptools.packages.find]
-include = ["quantlearn*"]
+include = ["quantlearn*", "quantdesk*"]
