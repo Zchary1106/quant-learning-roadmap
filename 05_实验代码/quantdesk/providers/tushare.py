@@ -200,6 +200,7 @@ class TushareProProvider:
                 combined_rows[key]
                 for key in sorted(combined_rows, key=lambda item: (item[1], item[0]))
             ),
+            raw_response=None,
         )
 
     def _parse_response(self, endpoint: str, response: Mapping[str, Any]) -> QueryResult:
@@ -229,7 +230,12 @@ class TushareProProvider:
                     f"{len(normalized_fields)} fields"
                 )
             rows.append(dict(zip(normalized_fields, values)))
-        return QueryResult(endpoint=endpoint, fields=normalized_fields, rows=tuple(rows))
+        return QueryResult(
+            endpoint=endpoint,
+            fields=normalized_fields,
+            rows=tuple(rows),
+            raw_response=body,
+        )
 
 
 def compact_date_windows(

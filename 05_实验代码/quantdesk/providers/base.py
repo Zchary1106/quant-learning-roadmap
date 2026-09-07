@@ -47,6 +47,7 @@ class QueryResult:
     endpoint: str
     fields: tuple[str, ...]
     rows: tuple[Mapping[str, Any], ...]
+    raw_response: Mapping[str, Any] | None = None
 
     @property
     def row_count(self) -> int:

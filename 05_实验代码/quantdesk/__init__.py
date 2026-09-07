@@ -14,6 +14,7 @@ from .contracts import (
     TradabilityState,
 )
 from .normalize import normalize_daily_bar, raw_daily_bar_from_tushare
+from .ingestion import ingest_tushare_result
 from .research import bars_to_ohlcv_frame, bars_to_research_frame
 from .storage import read_reference_records, write_reference_records
 from .tradability import assess_daily_tradability
@@ -25,6 +26,7 @@ __all__ = [
     "DailyBar",
     "DailyBarRaw",
     "Exchange",
+    "ingest_tushare_result",
     "PointInTimeConfidence",
     "SourceMetadata",
     "TradeSide",
