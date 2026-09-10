@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="从 Python、统计与市场基础，到回测、组合、风险和毕业项目的 24 周量化学习路线。">
+  <meta name="description" content="中文量化学习门户：知识地图、项目选择、30 天启动计划、24 周路线、可运行实验与毕业标准。">
   <meta name="theme-color" content="#f3f5ef">
   <meta property="og:title" content="量化学习路线 | 24 周系统课">
   <meta property="og:description" content="把想法变成可复现、可验证、可解释的量化研究。">
@@ -12,7 +12,7 @@
   <link rel="canonical" href="https://zchary1106.github.io/quant-learning-roadmap/">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23245c35'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-family='Arial,sans-serif' font-size='23' font-weight='700' fill='%23f8fff8'%3EQ24%3C/text%3E%3C/svg%3E">
   <link rel="preload" as="image" href="assets/market-research.jpg">
-  <title>量化学习路线 | 24 周系统课</title>
+  <title>量化学习中心 | 从零开始做可信研究</title>
   <style>
     :root {
       color-scheme: light;
@@ -204,6 +204,351 @@
     h2 { margin-bottom: 15px; font-size: clamp(34px, 5vw, 62px); line-height: 1.02; letter-spacing: -0.045em; }
     .section-head p, .lead { max-width: 62ch; color: var(--muted); font-size: 17px; }
 
+    .path-shell {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+    .path-rail {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(150px, 1fr));
+      overflow-x: auto;
+      background: var(--surface-strong);
+    }
+    .path-button {
+      min-height: 96px;
+      padding: 18px;
+      border: 0;
+      border-right: 1px solid var(--line);
+      background: transparent;
+      color: var(--muted);
+      text-align: left;
+      cursor: pointer;
+      transition: color 180ms ease, background 180ms ease, transform 180ms ease;
+    }
+    .path-button:last-child { border-right: 0; }
+    .path-button:hover { color: var(--text); }
+    .path-button:active { transform: translateY(1px); }
+    .path-button[aria-selected="true"] { background: var(--accent); color: var(--on-accent); }
+    .path-button strong { display: block; margin-bottom: 4px; font-size: 16px; }
+    .path-button span { font-size: 12px; }
+    .path-detail {
+      display: grid;
+      grid-template-columns: minmax(240px, 0.62fr) minmax(0, 1.38fr);
+      gap: clamp(36px, 7vw, 92px);
+      min-height: 430px;
+      padding: clamp(30px, 6vw, 72px);
+      align-items: center;
+    }
+    .path-position { color: var(--accent); font-size: 13px; font-weight: 800; }
+    .path-copy h3 { max-width: 13ch; margin: 12px 0 16px; font-size: clamp(32px, 4.4vw, 54px); line-height: 1.02; letter-spacing: -0.045em; }
+    .path-copy p { max-width: 48ch; margin: 0; color: var(--muted); }
+    .path-materials {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 30px 42px;
+    }
+    .path-block { padding-left: 18px; border-left: 2px solid var(--line); }
+    .path-block h4 { margin: 0 0 8px; color: var(--muted); font-size: 12px; }
+    .path-block p { margin: 0; }
+    .path-links { display: grid; gap: 6px; }
+    .path-links a { color: var(--accent-strong); font-weight: 720; text-underline-offset: 4px; }
+    .path-links a:hover { text-decoration-thickness: 2px; }
+
+    .process-layout {
+      display: grid;
+      grid-template-columns: minmax(260px, 0.65fr) minmax(0, 1.35fr);
+      gap: clamp(42px, 8vw, 112px);
+      align-items: start;
+    }
+    .process-intro { position: sticky; top: 108px; }
+    .process-intro p { color: var(--muted); }
+    .process-list { counter-reset: process; }
+    .process-item {
+      counter-increment: process;
+      display: grid;
+      grid-template-columns: 58px minmax(0, 1fr);
+      gap: 20px;
+      padding: 26px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .process-item:first-child { padding-top: 0; }
+    .process-item::before {
+      content: counter(process, decimal-leading-zero);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+    .process-item h3 { margin-bottom: 5px; font-size: 23px; }
+    .process-item p { max-width: 62ch; margin: 0; color: var(--muted); }
+
+    .knowledge-shell {
+      display: grid;
+      grid-template-columns: minmax(230px, 0.42fr) minmax(0, 1fr);
+      min-height: 510px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+    .knowledge-nav {
+      padding: 18px;
+      background: var(--surface-strong);
+    }
+    .knowledge-button {
+      width: 100%;
+      padding: 18px;
+      border: 0;
+      border-radius: 12px;
+      background: transparent;
+      color: var(--muted);
+      text-align: left;
+      cursor: pointer;
+      transition: color 180ms ease, background 180ms ease, transform 180ms ease;
+    }
+    .knowledge-button:hover { color: var(--text); }
+    .knowledge-button:active { transform: translateY(1px); }
+    .knowledge-button[aria-selected="true"] {
+      background: var(--accent);
+      color: var(--on-accent);
+    }
+    .knowledge-button strong { display: block; margin-bottom: 2px; font-size: 17px; }
+    .knowledge-button span { font-size: 12px; }
+    .knowledge-panel {
+      display: grid;
+      align-content: center;
+      padding: clamp(32px, 6vw, 78px);
+    }
+    .knowledge-panel h3 { max-width: 15ch; margin-bottom: 18px; font-size: clamp(30px, 4vw, 48px); line-height: 1.05; letter-spacing: -0.04em; }
+    .knowledge-panel > p { max-width: 62ch; color: var(--muted); font-size: 17px; }
+    .knowledge-points {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px 30px;
+      padding: 0;
+      margin: 26px 0 0;
+      list-style: none;
+    }
+    .knowledge-points li { padding-top: 12px; border-top: 1px solid var(--line); }
+    .knowledge-output {
+      display: inline-block;
+      width: fit-content;
+      margin-top: 28px;
+      padding: 8px 11px;
+      border-radius: 8px;
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      font-size: 13px;
+      font-weight: 760;
+    }
+
+    .resource-library {
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+      gap: 14px;
+    }
+    .resource-group {
+      padding: clamp(28px, 5vw, 56px);
+      border-radius: var(--radius);
+      background: var(--surface);
+    }
+    .resource-group:first-child { background: var(--accent-soft); }
+    .resource-group h3 { margin-bottom: 26px; font-size: clamp(28px, 4vw, 42px); letter-spacing: -0.035em; }
+    .resource-item {
+      display: grid;
+      grid-template-columns: minmax(150px, 0.42fr) minmax(0, 1fr);
+      gap: 20px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--line);
+      text-decoration: none;
+    }
+    .resource-item:last-child { border-bottom: 0; }
+    .resource-item strong { color: var(--accent-strong); }
+    .resource-item span { color: var(--muted); }
+    .resource-item:hover strong { text-decoration: underline; text-underline-offset: 4px; }
+
+    .project-toolbar {
+      display: grid;
+      grid-template-columns: 1fr minmax(240px, 0.45fr);
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 26px;
+    }
+    .project-filters { display: flex; flex-wrap: wrap; gap: 8px; }
+    .filter-button {
+      min-height: 42px;
+      padding: 9px 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface);
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .filter-button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent); color: var(--on-accent); }
+    .search-field label { display: block; margin-bottom: 6px; color: var(--muted); font-size: 12px; font-weight: 760; }
+    .search-field input {
+      width: 100%;
+      min-height: 44px;
+      padding: 10px 13px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface);
+      color: var(--text);
+    }
+    .search-field input::placeholder { color: color-mix(in srgb, var(--muted) 82%, transparent); }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      gap: 14px;
+    }
+    .project-card {
+      display: grid;
+      align-content: space-between;
+      min-height: 260px;
+      padding: clamp(24px, 4vw, 40px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+    }
+    .project-card:nth-child(4n + 1) { background: var(--accent-soft); }
+    .project-card:nth-child(5n + 3) { background: var(--surface-strong); }
+    .project-card.is-hidden { display: none; }
+    .project-card h3 { margin-bottom: 8px; font-size: clamp(24px, 3vw, 34px); letter-spacing: -0.035em; }
+    .project-card p { color: var(--muted); }
+    .project-meta { display: flex; flex-wrap: wrap; gap: 8px 18px; color: var(--muted); font-size: 12px; }
+    .project-link { width: fit-content; margin-top: 24px; color: var(--accent-strong); font-weight: 760; text-underline-offset: 4px; }
+    .empty-state {
+      display: none;
+      padding: 42px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      text-align: center;
+    }
+    .empty-state.is-visible { display: block; }
+
+    .starter-layout {
+      display: grid;
+      grid-template-columns: minmax(250px, 0.55fr) minmax(0, 1fr);
+      gap: clamp(34px, 7vw, 94px);
+      align-items: start;
+    }
+    .starter-summary {
+      position: sticky;
+      top: 108px;
+      padding: 28px;
+      border-radius: var(--radius);
+      background: var(--accent);
+      color: var(--on-accent);
+    }
+    .starter-summary strong { display: block; margin-bottom: 12px; font-size: clamp(58px, 9vw, 104px); line-height: 0.9; letter-spacing: -0.065em; }
+    .starter-summary p { color: color-mix(in srgb, var(--on-accent) 80%, transparent); }
+    .starter-summary button {
+      min-height: 42px;
+      padding: 9px 13px;
+      border: 1px solid color-mix(in srgb, var(--on-accent) 55%, transparent);
+      border-radius: 12px;
+      background: transparent;
+      color: var(--on-accent);
+      cursor: pointer;
+    }
+    .month-plan { display: grid; gap: 14px; }
+    .week-block {
+      padding: 0 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+    }
+    .week-block summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 23px 0;
+      cursor: pointer;
+      font-size: 19px;
+      font-weight: 760;
+    }
+    .week-block summary span { color: var(--muted); font-size: 13px; font-weight: 500; }
+    .week-tasks { display: grid; gap: 10px; padding: 0 0 24px; }
+    .week-task {
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 12px;
+      align-items: start;
+      color: var(--muted);
+    }
+    .week-task input { width: 19px; height: 19px; margin-top: 3px; accent-color: var(--accent); }
+    .week-task:has(input:checked) { color: var(--text); text-decoration: line-through; text-decoration-color: var(--line); }
+    .storage-note { min-height: 20px; margin: 12px 0 0; font-size: 12px; }
+
+    .experiment {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
+      overflow: hidden;
+      border-radius: var(--radius);
+      background: #161c18;
+      color: #edf6ed;
+      box-shadow: var(--shadow);
+    }
+    .code-side { position: relative; padding: clamp(28px, 5vw, 56px); }
+    .code-side h2 { max-width: 11ch; }
+    .code-side > p { max-width: 55ch; color: #b8c6ba; }
+    pre {
+      overflow-x: auto;
+      margin: 28px 0 0;
+      padding: 22px;
+      border-radius: 12px;
+      background: #0e120f;
+      color: #d9ead9;
+      font: 13px/1.7 "SFMono-Regular", Consolas, monospace;
+    }
+    .copy-button {
+      position: absolute;
+      right: clamp(28px, 5vw, 56px);
+      top: clamp(28px, 5vw, 56px);
+      min-height: 40px;
+      padding: 8px 12px;
+      border: 1px solid #647067;
+      border-radius: 10px;
+      background: #202822;
+      color: #edf6ed;
+      cursor: pointer;
+    }
+    .timeline-side {
+      display: grid;
+      align-content: center;
+      padding: clamp(28px, 5vw, 56px);
+      background: #273d2c;
+    }
+    .timeline-side h3 { margin-bottom: 24px; font-size: 26px; }
+    .timeline-event { display: grid; grid-template-columns: 84px 1fr; gap: 16px; padding: 15px 0; border-bottom: 1px solid #49604e; }
+    .timeline-event:last-child { border-bottom: 0; }
+    .timeline-event strong { color: #b7f36a; font-family: "SFMono-Regular", Consolas, monospace; font-size: 12px; }
+    .timeline-event p { margin: 0; color: #d3ded4; font-size: 14px; }
+
+    .learning-system {
+      display: grid;
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+      gap: clamp(36px, 8vw, 110px);
+      align-items: center;
+      padding: clamp(32px, 7vw, 86px);
+      border-radius: var(--radius);
+      background: var(--surface-strong);
+    }
+    .time-ratio { display: grid; gap: 18px; }
+    .ratio-line { display: grid; grid-template-columns: 110px 1fr; gap: 16px; align-items: baseline; }
+    .ratio-line strong { color: var(--accent); font-size: clamp(42px, 7vw, 76px); line-height: 0.9; letter-spacing: -0.055em; }
+    .ratio-line span { color: var(--muted); }
+    .method-rules { display: grid; gap: 24px; }
+    .method-rules h2 { margin-bottom: 4px; }
+    .method-rule { padding-top: 18px; border-top: 1px solid var(--line); }
+    .method-rule h3 { margin-bottom: 5px; font-size: 19px; }
+    .method-rule p { margin: 0; color: var(--muted); }
+
     .planner {
       padding: clamp(26px, 4vw, 54px);
       border: 1px solid var(--line);
@@ -354,6 +699,12 @@
       .score { position: static; }
       .tracks-layout { grid-template-columns: 1fr; }
       .track-card:first-child { grid-row: auto; }
+      .process-layout, .starter-layout { grid-template-columns: 1fr; }
+      .process-intro, .starter-summary { position: static; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .experiment { grid-template-columns: 1fr; }
+      .resource-library, .learning-system { grid-template-columns: 1fr; }
+      .path-detail { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 767px) {
@@ -380,6 +731,28 @@
       .fail-rule { grid-column: auto; }
       .final-cta { grid-template-columns: 1fr; }
       .footer-row { flex-direction: column; }
+      .process-item { grid-template-columns: 42px 1fr; }
+      .path-rail { display: flex; }
+      .path-button { min-width: 168px; }
+      .path-detail { display: flex; flex-direction: column; align-items: stretch; min-height: 0; padding: 30px 22px; }
+      .path-materials { grid-template-columns: 1fr; gap: 22px; }
+      .knowledge-shell { display: flex; flex-direction: column; min-height: 0; }
+      .knowledge-nav { display: flex; gap: 8px; overflow-x: auto; }
+      .knowledge-button { min-width: 180px; }
+      .knowledge-panel { padding: 30px 22px; }
+      .knowledge-points { grid-template-columns: 1fr; }
+      .project-toolbar { grid-template-columns: 1fr; }
+      .projects-grid { display: flex; flex-direction: column; }
+      .project-card { min-height: 220px; }
+      .starter-layout { display: flex; flex-direction: column; }
+      .starter-summary, .month-plan { width: 100%; }
+      .experiment { display: flex; flex-direction: column; }
+      .copy-button { position: static; margin-top: 18px; }
+      .timeline-event { grid-template-columns: 70px 1fr; }
+      .resource-library, .learning-system { display: flex; flex-direction: column; }
+      .resource-group { width: 100%; }
+      .resource-item { grid-template-columns: 1fr; gap: 4px; }
+      .time-ratio, .method-rules { width: 100%; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -402,9 +775,11 @@
         <span>量化学习路线</span>
       </a>
       <div class="nav-links">
+        <a href="#learning-path">主线</a>
+        <a href="#knowledge">知识</a>
+        <a href="#projects">项目</a>
         <a href="#roadmap">路线</a>
-        <a href="#tracks">分支</a>
-        <a href="#graduation">毕业标准</a>
+        <a href="#starter">30 天</a>
         <button class="theme-toggle" id="theme-toggle" type="button">切换主题</button>
       </div>
     </nav>
@@ -417,8 +792,8 @@
         <h1>24 周，学会可信量化研究</h1>
         <p>每周 8-10 小时，从 Python 基础走到可复现研究、风险评估和纸上交易。</p>
         <div class="actions">
-          <a class="button" href="#roadmap">开始规划</a>
-          <a class="button secondary" href="https://github.com/Zchary1106/quant-learning-roadmap" rel="noopener">打开资料库</a>
+          <a class="button" href="#starter">开始 30 天</a>
+          <a class="button secondary" href="#projects">选择项目</a>
         </div>
       </div>
       <figure class="hero-media reveal">
@@ -433,6 +808,329 @@
       <div class="metric"><strong>8</strong><span>个可运行实验</span></div>
       <div class="metric"><strong>20</strong><span>项自动测试</span></div>
     </div>
+
+    <section class="section-space shell" id="learning-path">
+      <div class="section-head reveal">
+        <h2>从第一天到独立研究</h2>
+        <p>按顺序点击主线。每一段都明确要读什么、运行什么、交付什么，以及何时可以继续。</p>
+      </div>
+      <div class="path-shell reveal">
+        <div class="path-rail" role="tablist" aria-label="量化学习主线">
+          <button class="path-button" id="path-tab-orient" type="button" role="tab" data-path="orient" aria-selected="true">
+            <strong>认识全局</strong><span>第 1-3 天</span>
+          </button>
+          <button class="path-button" id="path-tab-data" type="button" role="tab" data-path="data" aria-selected="false">
+            <strong>整理数据</strong><span>第 1-2 周</span>
+          </button>
+          <button class="path-button" id="path-tab-evidence" type="button" role="tab" data-path="evidence" aria-selected="false">
+            <strong>理解证据</strong><span>第 3-4 周</span>
+          </button>
+          <button class="path-button" id="path-tab-backtest" type="button" role="tab" data-path="backtest" aria-selected="false">
+            <strong>严谨回测</strong><span>第 5-8 周</span>
+          </button>
+          <button class="path-button" id="path-tab-factor" type="button" role="tab" data-path="factor" aria-selected="false">
+            <strong>研究因子</strong><span>第 9-12 周</span>
+          </button>
+          <button class="path-button" id="path-tab-specialize" type="button" role="tab" data-path="specialize" aria-selected="false">
+            <strong>深入分支</strong><span>第 13-24 周</span>
+          </button>
+        </div>
+        <div class="path-detail" id="path-detail" role="tabpanel" aria-labelledby="path-tab-orient" aria-live="polite">
+          <div class="path-copy">
+            <span class="path-position" id="path-position">当前位置 1 / 6</span>
+            <h3 id="path-title">先看懂整个研究链</h3>
+            <p id="path-goal">先理解量化不是预测明天涨跌，而是把假设、数据、交易和风险变成可以检查的流程。</p>
+          </div>
+          <div class="path-materials">
+            <div class="path-block">
+              <h4>阅读资料</h4>
+              <div class="path-links" id="path-reading">
+                <a href="#method">本页：量化研究流程</a>
+                <a href="https://github.com/Zchary1106/quant-learning-roadmap/blob/main/02_%E6%A0%B8%E5%BF%83%E8%AE%B2%E4%B9%89/01_%E9%87%8F%E5%8C%96%E7%A0%94%E7%A9%B6%E5%85%A8%E6%99%AF.md" rel="noopener">讲义 01：量化研究全景</a>
+              </div>
+            </div>
+            <div class="path-block">
+              <h4>动手任务</h4>
+              <p id="path-practice">完成入学诊断，在研究型、工程型和机器学习型中选择一条主线。</p>
+            </div>
+            <div class="path-block">
+              <h4>必须交付</h4>
+              <p id="path-output">一页学习目标，写明每周时间、研究市场和第一项作品。</p>
+            </div>
+            <div class="path-block">
+              <h4>进入下一段的闸门</h4>
+              <p id="path-gate">能解释数据、信号、组合、成交、验证和风险之间的关系。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-space shell" id="method">
+      <div class="process-layout">
+        <div class="process-intro reveal">
+          <h2>量化是怎样做出来的</h2>
+          <p>每一步都留下输入、假设、输出和失败条件。任何一步含糊，漂亮结果都可能只是错觉。</p>
+          <a class="project-link" href="https://github.com/Zchary1106/quant-learning-roadmap/blob/main/04_%E5%AE%9E%E8%B7%B5%E9%A1%B9%E7%9B%AE/%E7%A0%94%E7%A9%B6%E6%8A%A5%E5%91%8A%E6%A8%A1%E6%9D%BF.md" rel="noopener">查看研究报告模板</a>
+        </div>
+        <div class="process-list reveal">
+          <article class="process-item">
+            <div><h3>提出可证伪假设</h3><p>解释机制、资产范围、观察频率和停止条件。先写下来，再看结果。</p></div>
+          </article>
+          <article class="process-item">
+            <div><h3>建立数据快照</h3><p>保存来源、获取时间、字段、时区、复权、缺失含义和校验值。</p></div>
+          </article>
+          <article class="process-item">
+            <div><h3>构造特征与信号</h3><p>标明信息最早可见时间，防止财报、价格和横截面处理泄漏未来。</p></div>
+          </article>
+          <article class="process-item">
+            <div><h3>转成目标仓位</h3><p>加入标准化、约束、风险预算和换手控制。预测值不直接等于权重。</p></div>
+          </article>
+          <article class="process-item">
+            <div><h3>模拟成交与成本</h3><p>处理延迟、价差、佣金、税费、滑点、容量和无法成交的状态。</p></div>
+          </article>
+          <article class="process-item">
+            <div><h3>对照简单基准</h3><p>使用相同日期与约束比较现金、买入持有、等权或简单规则策略。</p></div>
+          </article>
+          <article class="process-item">
+            <div><h3>做样本外验证</h3><p>使用 walk-forward、成本敏感性、参数邻域、子区间和负对照。</p></div>
+          </article>
+          <article class="process-item">
+            <div><h3>决定停止或模拟</h3><p>证据不足就停止。证据尚可也只进入 paper trading，不直接投入真实资金。</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-space shell" id="knowledge">
+      <div class="section-head reveal">
+        <h2>五块知识，按输出掌握</h2>
+        <p>点击模块查看学习重点。不要追求一次学完，用当前项目决定学习深度。</p>
+      </div>
+      <div class="knowledge-shell reveal">
+        <div class="knowledge-nav" role="tablist" aria-label="量化知识模块">
+          <button class="knowledge-button" id="knowledge-tab-data" type="button" role="tab" data-topic="data" aria-selected="true">
+            <strong>Python 与数据</strong><span>工具、清洗、SQL、测试</span>
+          </button>
+          <button class="knowledge-button" id="knowledge-tab-stats" type="button" role="tab" data-topic="stats" aria-selected="false">
+            <strong>数学与统计</strong><span>概率、回归、时间序列</span>
+          </button>
+          <button class="knowledge-button" id="knowledge-tab-market" type="button" role="tab" data-topic="market" aria-selected="false">
+            <strong>金融与市场</strong><span>产品、订单、复权、成本</span>
+          </button>
+          <button class="knowledge-button" id="knowledge-tab-research" type="button" role="tab" data-topic="research" aria-selected="false">
+            <strong>研究与回测</strong><span>偏差、基准、样本外</span>
+          </button>
+          <button class="knowledge-button" id="knowledge-tab-risk" type="button" role="tab" data-topic="risk" aria-selected="false">
+            <strong>组合与工程</strong><span>仓位、风险、订单、恢复</span>
+          </button>
+        </div>
+        <div class="knowledge-panel" id="knowledge-panel" role="tabpanel" aria-labelledby="knowledge-tab-data" aria-live="polite">
+          <h3 id="knowledge-title">先让数据可靠，再让策略复杂</h3>
+          <p id="knowledge-summary">掌握 Python、NumPy、pandas、SQL、Git 和 pytest。目标不是会调用函数，而是能从原始文件稳定重建结果。</p>
+          <ul class="knowledge-points" id="knowledge-points">
+            <li>读取 CSV 与 Parquet</li>
+            <li>日期、时区与交易日历</li>
+            <li>合并、滚动与分组</li>
+            <li>数据质量与边界测试</li>
+          </ul>
+          <span class="knowledge-output" id="knowledge-output">验收：一条命令重建 clean 与 features 数据</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-space shell" id="resources">
+      <div class="section-head reveal">
+        <h2>少而精的学习资料</h2>
+        <p>每读一章，至少留下一个可运行例子、一张图和一个失败条件。</p>
+      </div>
+      <div class="resource-library reveal">
+        <div class="resource-group">
+          <h3>先打牢数据与统计</h3>
+          <a class="resource-item" href="https://wesmckinney.com/book/" rel="noopener">
+            <strong>Python for Data Analysis</strong><span>NumPy、pandas、清洗与时间序列的主线教材。</span>
+          </a>
+          <a class="resource-item" href="https://pandas.pydata.org/docs/getting_started/index.html" rel="noopener">
+            <strong>pandas 官方入门</strong><span>索引、合并、分组、滚动窗口和缺失值。</span>
+          </a>
+          <a class="resource-item" href="https://www.openintro.org/book/os/" rel="noopener">
+            <strong>OpenIntro Statistics</strong><span>概率、抽样、推断和回归的开放教材。</span>
+          </a>
+          <a class="resource-item" href="https://www.statlearning.com/" rel="noopener">
+            <strong>ISLP</strong><span>Python 版统计学习，包含每章可运行实验。</span>
+          </a>
+        </div>
+        <div class="resource-group">
+          <h3>再进入金融研究</h3>
+          <a class="resource-item" href="https://www.tidy-finance.org/python/" rel="noopener">
+            <strong>Tidy Finance</strong><span>用可复现 Python 代码学习实证金融与资产定价。</span>
+          </a>
+          <a class="resource-item" href="https://quantecon.org/lectures/" rel="noopener">
+            <strong>QuantEcon</strong><span>Python、动态模型、经济学和资产定价课程。</span>
+          </a>
+          <a class="resource-item" href="https://www.ml4trading.io/" rel="noopener">
+            <strong>ML for Trading</strong><span>第 12 周后选章，始终保留规则和线性基准。</span>
+          </a>
+          <a class="resource-item" href="https://datawhalechina.github.io/whale-quant/" rel="noopener">
+            <strong>WhaleQuant</strong><span>中文数据、选股、择时、调仓、回测和机器学习案例。</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-space shell" id="projects">
+      <div class="section-head reveal">
+        <h2>只选一个适合当前阶段的项目</h2>
+        <p>项目越大不代表越适合。先完成小而完整的研究，再进入复杂框架。</p>
+      </div>
+      <div class="project-toolbar reveal">
+        <div class="project-filters" role="group" aria-label="筛选项目方向">
+          <button class="filter-button" type="button" data-filter="all" aria-pressed="true">全部</button>
+          <button class="filter-button" type="button" data-filter="beginner" aria-pressed="false">零基础</button>
+          <button class="filter-button" type="button" data-filter="research" aria-pressed="false">研究</button>
+          <button class="filter-button" type="button" data-filter="engineering" aria-pressed="false">工程</button>
+          <button class="filter-button" type="button" data-filter="ml" aria-pressed="false">机器学习</button>
+        </div>
+        <div class="search-field">
+          <label for="project-search">按名称或用途搜索</label>
+          <input id="project-search" type="search" placeholder="例如：回测、组合、订单">
+        </div>
+      </div>
+      <div class="projects-grid reveal" id="projects-grid">
+        <article class="project-card" data-tags="beginner research python metrics backtest 中文">
+          <div><h3>本仓库实验</h3><p>从指标、数据质量和均线回测开始，逐行理解时间对齐、成本与样本外验证。</p></div>
+          <div><div class="project-meta"><span>起点：零基础</span><span>语言：Python</span></div><a class="project-link" href="https://github.com/Zchary1106/quant-learning-roadmap/tree/main/05_%E5%AE%9E%E9%AA%8C%E4%BB%A3%E7%A0%81" rel="noopener">打开实验</a></div>
+        </article>
+        <article class="project-card" data-tags="beginner research 中文 notebook 风险 组合">
+          <div><h3>Quant-for-Beginners</h3><p>中文 Notebook 课程，覆盖收益、均线、回测、波动、夏普、回撤和多标的组合。</p></div>
+          <div><div class="project-meta"><span>起点：零基础</span><span>许可：MIT</span></div><a class="project-link" href="https://github.com/datawhalechina/quant-for-beginners" rel="noopener">查看课程</a></div>
+        </article>
+        <article class="project-card" data-tags="beginner research backtest strategy python 可视化">
+          <div><h3>backtesting.py</h3><p>用简洁 API 编写单资产策略。适合学习策略、指标、订单和结果可视化的边界。</p></div>
+          <div><div class="project-meta"><span>阶段：第 9 周后</span><span>许可：AGPL-3.0</span></div><a class="project-link" href="https://github.com/kernc/backtesting.py" rel="noopener">查看项目</a></div>
+        </article>
+        <article class="project-card" data-tags="research portfolio allocation 组合 权重 python">
+          <div><h3>bt</h3><p>面向资产配置和权重算法的组合回测框架。适合比较等权、风险预算与再平衡。</p></div>
+          <div><div class="project-meta"><span>阶段：第 15 周后</span><span>许可：MIT</span></div><a class="project-link" href="https://github.com/pmorissette/bt" rel="noopener">查看项目</a></div>
+        </article>
+        <article class="project-card" data-tags="research ml factor qlib 因子 机器学习 workflow">
+          <div><h3>Qlib</h3><p>覆盖数据、因子、模型、组合和实验管理。适合已经掌握无泄漏验证的研究者。</p></div>
+          <div><div class="project-meta"><span>阶段：第 14 周后</span><span>许可：MIT</span></div><a class="project-link" href="https://github.com/microsoft/qlib" rel="noopener">查看项目</a></div>
+        </article>
+        <article class="project-card" data-tags="ml research textbook feature model 机器学习 教材">
+          <div><h3>ML for Trading</h3><p>从市场数据、特征工程走到模型与策略评估。适合逐章复现和建立简单基准。</p></div>
+          <div><div class="project-meta"><span>方向：机器学习</span><span>许可：MIT</span></div><a class="project-link" href="https://github.com/stefan-jansen/machine-learning-for-trading" rel="noopener">查看教材代码</a></div>
+        </article>
+        <article class="project-card" data-tags="engineering china vnpy order gateway event 中国 订单 网关">
+          <div><h3>VeighNa / vn.py</h3><p>中国交易生态中的事件引擎、网关、策略应用和订单管理。先历史回放，再模拟交易。</p></div>
+          <div><div class="project-meta"><span>方向：工程</span><span>许可：MIT</span></div><a class="project-link" href="https://github.com/vnpy/vnpy" rel="noopener">查看项目</a></div>
+        </article>
+        <article class="project-card" data-tags="engineering lean multi asset csharp python order portfolio 全栈">
+          <div><h3>LEAN</h3><p>多资产全栈交易引擎，适合按数据、算法、组合、风险和订单模块阅读架构。</p></div>
+          <div><div class="project-meta"><span>方向：高阶工程</span><span>许可：Apache-2.0</span></div><a class="project-link" href="https://github.com/QuantConnect/Lean" rel="noopener">查看项目</a></div>
+        </article>
+        <article class="project-card" data-tags="engineering nautilus rust event replay order high performance 高性能">
+          <div><h3>NautilusTrader</h3><p>确定性事件驱动平台，重点学习回放、时钟、订单状态与高性能系统边界。</p></div>
+          <div><div class="project-meta"><span>方向：高阶工程</span><span>许可：LGPL-3.0</span></div><a class="project-link" href="https://github.com/nautechsystems/nautilus_trader" rel="noopener">查看项目</a></div>
+        </article>
+      </div>
+      <div class="empty-state" id="project-empty" role="status">
+        <h3>没有匹配项目</h3>
+        <p>清空搜索词或切换分类。先从本仓库实验开始通常是最稳妥的选择。</p>
+      </div>
+    </section>
+
+    <section class="section-space shell" id="starter">
+      <div class="section-head reveal">
+        <h2>30 天，完成第一份可信研究</h2>
+        <p>每天 60-90 分钟。完成状态保存在本机浏览器，不会上传。</p>
+      </div>
+      <div class="starter-layout reveal">
+        <aside class="starter-summary">
+          <strong id="starter-count">0 / 16</strong>
+          <p>已完成行动。目标不是赚到钱，而是能发现错误、重建结果并写清限制。</p>
+          <button type="button" id="starter-reset">重置 30 天计划</button>
+          <p class="storage-note" id="storage-note" aria-live="polite"></p>
+        </aside>
+        <div class="month-plan">
+          <details class="week-block" open>
+            <summary>读数据，算收益 <span>第 1-7 天</span></summary>
+            <div class="week-tasks">
+              <label class="week-task"><input type="checkbox" data-starter="environment"><span>创建虚拟环境并运行全部测试</span></label>
+              <label class="week-task"><input type="checkbox" data-starter="returns"><span>手算简单收益、复利和最大回撤</span></label>
+              <label class="week-task"><input type="checkbox" data-starter="ohlcv"><span>读取 OHLCV，检查日期、重复与缺失</span></label>
+              <label class="week-task"><input type="checkbox" data-starter="notes"><span>记录第一个数据字典和失败案例</span></label>
+            </div>
+          </details>
+          <details class="week-block">
+            <summary>建立基准研究 <span>第 8-14 天</span></summary>
+            <div class="week-tasks">
+              <label class="week-task"><input type="checkbox" data-starter="pipeline"><span>运行 Lab 5，生成三层 SQLite 数据</span></label>
+              <label class="week-task"><input type="checkbox" data-starter="benchmark"><span>计算买入持有与现金基准</span></label>
+              <label class="week-task"><input type="checkbox" data-starter="charts"><span>绘制净值、回撤和滚动波动</span></label>
+              <label class="week-task"><input type="checkbox" data-starter="datacard"><span>完成来源、复权和许可数据卡</span></label>
+            </div>
+          </details>
+          <details class="week-block">
+            <summary>实现简单策略 <span>第 15-21 天</span></summary>
+            <div class="week-tasks">
+              <label class="week-task"><input type="checkbox" data-starter="timeline"><span>画出信息、信号、成交和收益时间线</span></label>
+              <label class="week-task"><input type="checkbox" data-starter="sma"><span>运行含一档延迟的均线策略</span></label>
+              <label class="week-task"><input type="checkbox" data-starter="cost"><span>比较 0、5、10、20 bps 成本</span></label>
+              <label class="week-task"><input type="checkbox" data-starter="walkforward"><span>运行 Lab 6，只在训练窗选择参数</span></label>
+            </div>
+          </details>
+          <details class="week-block">
+            <summary>验证并写报告 <span>第 22-30 天</span></summary>
+            <div class="week-tasks">
+              <label class="week-task"><input type="checkbox" data-starter="bootstrap"><span>运行 Lab 8，比较不同块长度</span></label>
+              <label class="week-task"><input type="checkbox" data-starter="robustness"><span>检查参数邻域、子区间和成本翻倍</span></label>
+              <label class="week-task"><input type="checkbox" data-starter="negative"><span>完成一个时间错位或伪因子负对照</span></label>
+              <label class="week-task"><input type="checkbox" data-starter="report"><span>提交含基准、样本外和限制的报告</span></label>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-space shell reveal" id="experiment">
+      <div class="experiment">
+        <div class="code-side">
+          <h2>现在运行第一个实验</h2>
+          <p>先确认环境和测试，再运行指标与真实数据流水线。不要跳过失败输出。</p>
+          <button class="copy-button" id="copy-command" type="button">复制命令</button>
+          <pre><code id="starter-command">cd /Users/yadongzhai/MyWork/量化/05_实验代码
+source .venv/bin/activate
+pytest -q
+python labs/lab_01_metrics.py
+python labs/lab_05_real_data_pipeline.py</code></pre>
+        </div>
+        <div class="timeline-side">
+          <h3>时间对齐底线</h3>
+          <div class="timeline-event"><strong>收盘 t</strong><p>价格与信息变为可见</p></div>
+          <div class="timeline-event"><strong>收盘后</strong><p>计算特征与目标仓位</p></div>
+          <div class="timeline-event"><strong>交易 t+1</strong><p>在可成交价格执行订单</p></div>
+          <div class="timeline-event"><strong>成交后</strong><p>持仓才开始获得后续收益</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-space shell reveal" id="study-method">
+      <div class="learning-system">
+        <div class="time-ratio" aria-label="建议学习时间分配">
+          <div class="ratio-line"><strong>70%</strong><span>写代码、做实验、改错误</span></div>
+          <div class="ratio-line"><strong>20%</strong><span>读教材、文档和优秀源码</span></div>
+          <div class="ratio-line"><strong>10%</strong><span>看视频建立直觉</span></div>
+        </div>
+        <div class="method-rules">
+          <div><h2>怎样学得更扎实</h2><p class="lead">时间比例只是建议，真正的衡量标准是能否独立交付作品。</p></div>
+          <div class="method-rule"><h3>每周留下四样东西</h3><p>可运行代码、自动测试、结果图和一页结论。没有产出就不算完成。</p></div>
+          <div class="method-rule"><h3>每个概念都故意做错一次</h3><p>制造同日收益泄漏、错误复权或重复日期，确认测试能抓住问题。</p></div>
+          <div class="method-rule"><h3>每四周从零重做</h3><p>不看旧代码重建一个项目，暴露那些看懂但不会做的知识点。</p></div>
+          <div class="method-rule"><h3>一次只改变一个变量</h3><p>不要同时换数据、信号、模型和成本，否则无法解释改善来自哪里。</p></div>
+        </div>
+      </div>
+    </section>
 
     <section class="section-space shell" id="roadmap">
       <div class="section-head reveal">
@@ -634,10 +1332,30 @@
         engineering: "适合构建回测、行情、订单和交易基础设施。",
         ml: "适合预测、排序与时间感知机器学习研究。"
       };
-      var selectedTrack = localStorage.getItem("quant-route-track") || "research";
+      var storageAvailable = true;
+      function readStorage(key, fallback) {
+        try {
+          var value = localStorage.getItem(key);
+          return value === null ? fallback : value;
+        } catch (error) {
+          storageAvailable = false;
+          return fallback;
+        }
+      }
+      function writeStorage(key, value) {
+        try {
+          localStorage.setItem(key, value);
+          return true;
+        } catch (error) {
+          storageAvailable = false;
+          return false;
+        }
+      }
+
+      var selectedTrack = readStorage("quant-route-track", "research");
       var selectedPhase = 0;
       var completed = {};
-      try { completed = JSON.parse(localStorage.getItem("quant-route-progress") || "{}"); } catch (error) { completed = {}; }
+      try { completed = JSON.parse(readStorage("quant-route-progress", "{}")); } catch (error) { completed = {}; }
 
       var phaseTabs = document.getElementById("phase-tabs");
       var phasePanel = document.getElementById("phase-panel");
@@ -709,7 +1427,7 @@
           checkbox.setAttribute("aria-label", "标记第 " + week[0] + " 周完成");
           checkbox.addEventListener("change", function () {
             completed[String(week[0])] = checkbox.checked;
-            localStorage.setItem("quant-route-progress", JSON.stringify(completed));
+            writeStorage("quant-route-progress", JSON.stringify(completed));
             card.classList.toggle("is-complete", checkbox.checked);
             updateProgress();
           });
@@ -734,7 +1452,7 @@
         button.setAttribute("aria-pressed", String(button.dataset.track === selectedTrack));
         button.addEventListener("click", function () {
           selectedTrack = button.dataset.track;
-          localStorage.setItem("quant-route-track", selectedTrack);
+          writeStorage("quant-route-track", selectedTrack);
           document.querySelectorAll(".track-button").forEach(function (item) {
             item.setAttribute("aria-pressed", String(item.dataset.track === selectedTrack));
           });
@@ -748,15 +1466,270 @@
       renderPhase();
       updateProgress();
 
+      var learningPath = {
+        orient: {
+          position: "当前位置 1 / 6",
+          title: "先看懂整个研究链",
+          goal: "先理解量化不是预测明天涨跌，而是把假设、数据、交易和风险变成可以检查的流程。",
+          reading: [
+            ["本页：量化研究流程", "#method"],
+            ["讲义 01：量化研究全景", "https://github.com/Zchary1106/quant-learning-roadmap/blob/main/02_%E6%A0%B8%E5%BF%83%E8%AE%B2%E4%B9%89/01_%E9%87%8F%E5%8C%96%E7%A0%94%E7%A9%B6%E5%85%A8%E6%99%AF.md"]
+          ],
+          practice: "完成入学诊断，在研究型、工程型和机器学习型中选择一条主线。",
+          output: "一页学习目标，写明每周时间、研究市场和第一项作品。",
+          gate: "能解释数据、信号、组合、成交、验证和风险之间的关系。"
+        },
+        data: {
+          position: "当前位置 2 / 6",
+          title: "把原始行情变成可靠数据",
+          goal: "学习 Python 与 pandas，但始终围绕真实数据任务。每一列都要知道来源、时间和缺失含义。",
+          reading: [
+            ["Python for Data Analysis", "https://wesmckinney.com/book/"],
+            ["pandas 官方入门", "https://pandas.pydata.org/docs/getting_started/index.html"],
+            ["本页：学习资料", "#resources"]
+          ],
+          practice: "运行 Lab 1 和 Lab 5，检查 OHLCV 并生成 raw、clean、features 三层 SQLite。",
+          output: "数据卡、数据字典、质量报告，以及可以重复运行的数据流水线。",
+          gate: "删除输出后，能从原始快照一条命令重建相同结果。"
+        },
+        evidence: {
+          position: "当前位置 3 / 6",
+          title: "理解结果为什么可能只是运气",
+          goal: "掌握复利、抽样、置信区间、回归、自相关和厚尾。不要用一个夏普比率代替完整证据。",
+          reading: [
+            ["OpenIntro Statistics", "https://www.openintro.org/book/os/"],
+            ["ISLP", "https://www.statlearning.com/"],
+            ["讲义 12：统计推断与稳健性", "https://github.com/Zchary1106/quant-learning-roadmap/blob/main/02_%E6%A0%B8%E5%BF%83%E8%AE%B2%E4%B9%89/12_%E7%BB%9F%E8%AE%A1%E6%8E%A8%E6%96%AD%E4%B8%8E%E7%A8%B3%E5%81%A5%E6%80%A7.md"]
+          ],
+          practice: "手算收益、回撤和协方差，运行 Lab 8，比较不同块长度的 bootstrap 区间。",
+          output: "一张均值不确定性图，以及对短样本年化结果的书面解释。",
+          gate: "能说明 train、validation、test 的顺序，并解释测试集为什么不能反复查看。"
+        },
+        backtest: {
+          position: "当前位置 4 / 6",
+          title: "把策略写成不会穿越的回测",
+          goal: "明确每条信息何时可见、何时产生信号、何时成交，以及成本在哪一刻发生。",
+          reading: [
+            ["讲义 05：数据工程与偏差", "https://github.com/Zchary1106/quant-learning-roadmap/blob/main/02_%E6%A0%B8%E5%BF%83%E8%AE%B2%E4%B9%89/05_%E6%95%B0%E6%8D%AE%E5%B7%A5%E7%A8%8B%E4%B8%8E%E5%81%8F%E5%B7%AE%E9%98%B2%E7%BA%BF.md"],
+            ["讲义 07：回测与科学验证", "https://github.com/Zchary1106/quant-learning-roadmap/blob/main/02_%E6%A0%B8%E5%BF%83%E8%AE%B2%E4%B9%89/07_%E5%9B%9E%E6%B5%8B%E4%B8%8E%E7%A7%91%E5%AD%A6%E9%AA%8C%E8%AF%81.md"],
+            ["本页：30 天计划", "#starter"]
+          ],
+          practice: "运行 Lab 2 和 Lab 6，对均线策略加入一档延迟、基准、成本与 walk-forward。",
+          output: "净值与回撤图、成本敏感性、所有参数结果和连续样本外收益。",
+          gate: "信号时间线正确，测试集没有参与参数选择，成本翻倍后仍能解释结果。"
+        },
+        factor: {
+          position: "当前位置 5 / 6",
+          title: "从公开因子开始做完整研究",
+          goal: "先复现动量、反转、价值、质量、波动和流动性，再寻找有机制的改进。",
+          reading: [
+            ["Fama-French Data Library", "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html"],
+            ["讲义 06：信号、因子与策略", "https://github.com/Zchary1106/quant-learning-roadmap/blob/main/02_%E6%A0%B8%E5%BF%83%E8%AE%B2%E4%B9%89/06_%E4%BF%A1%E5%8F%B7%E5%9B%A0%E5%AD%90%E4%B8%8E%E7%AD%96%E7%95%A5.md"],
+            ["本页：项目选择", "#projects"]
+          ],
+          practice: "运行 Lab 3、4、7，完成一次 12-1 月动量的 Rank IC、五分组、换手和成本研究。",
+          output: "因子定义、数据可见时间、IC、分组收益、暴露、中性化与样本外报告。",
+          gate: "因子有经济解释，相对已知因子提供增量，并且成本后仍值得继续研究。"
+        },
+        specialize: {
+          position: "当前位置 6 / 6",
+          title: "用一个方向完成毕业项目",
+          goal: "研究型进入组合与归因，工程型进入订单与恢复，机器学习型进入时间感知特征管道。",
+          reading: [
+            ["本页：项目选择", "#projects"],
+            ["本页：24 周路线", "#roadmap"],
+            ["Machine Learning for Trading", "https://www.ml4trading.io/"]
+          ],
+          practice: "只选 Qlib、vn.py、LEAN 或 NautilusTrader 中与自己方向最相关的一个，画出真实调用链。",
+          output: "可运行代码、测试、数据快照、完整报告、风险边界和 10 分钟讲解。",
+          gate: "别人可以重跑结果，任何收益都能解释来源，异常时系统能够安全停止。"
+        }
+      };
+      var pathDetail = document.getElementById("path-detail");
+      var pathPosition = document.getElementById("path-position");
+      var pathTitle = document.getElementById("path-title");
+      var pathGoal = document.getElementById("path-goal");
+      var pathReading = document.getElementById("path-reading");
+      var pathPractice = document.getElementById("path-practice");
+      var pathOutput = document.getElementById("path-output");
+      var pathGate = document.getElementById("path-gate");
+
+      function renderLearningPath(key) {
+        var item = learningPath[key] || learningPath.orient;
+        var activeButton = document.querySelector('[data-path="' + key + '"]') || document.querySelector('[data-path="orient"]');
+        document.querySelectorAll(".path-button").forEach(function (button) {
+          button.setAttribute("aria-selected", String(button === activeButton));
+        });
+        pathDetail.setAttribute("aria-labelledby", activeButton.id);
+        pathPosition.textContent = item.position;
+        pathTitle.textContent = item.title;
+        pathGoal.textContent = item.goal;
+        pathPractice.textContent = item.practice;
+        pathOutput.textContent = item.output;
+        pathGate.textContent = item.gate;
+        pathReading.replaceChildren();
+        item.reading.forEach(function (resource) {
+          var link = document.createElement("a");
+          link.href = resource[1];
+          link.textContent = resource[0];
+          if (resource[1].startsWith("http")) link.rel = "noopener";
+          pathReading.appendChild(link);
+        });
+        writeStorage("quant-learning-path", key);
+      }
+
+      document.querySelectorAll(".path-button").forEach(function (button) {
+        button.addEventListener("click", function () {
+          renderLearningPath(button.dataset.path);
+        });
+      });
+      renderLearningPath(readStorage("quant-learning-path", "orient"));
+
+      var knowledgeTopics = {
+        data: {
+          title: "先让数据可靠，再让策略复杂",
+          summary: "掌握 Python、NumPy、pandas、SQL、Git 和 pytest。目标不是会调用函数，而是能从原始文件稳定重建结果。",
+          points: ["读取 CSV 与 Parquet", "日期、时区与交易日历", "合并、滚动与分组", "数据质量与边界测试"],
+          output: "验收：一条命令重建 clean 与 features 数据"
+        },
+        stats: {
+          title: "用不确定性约束结论",
+          summary: "学习收益与复利、概率、抽样、协方差、回归、自相关、异方差和多重检验。统计显著不等于可交易。",
+          points: ["置信区间与抽样误差", "回归与残差诊断", "平稳性与时间依赖", "块 bootstrap 与 HAC"],
+          output: "验收：能解释一个夏普比率为什么不可靠"
+        },
+        market: {
+          title: "价格序列背后是交易规则",
+          summary: "理解股票、ETF、期货和期权的收益结构，以及订单、复权、流动性、保证金和市场制度。",
+          points: ["市价单与限价单", "买卖价差与市场冲击", "分红、拆股与退市", "涨跌停、停牌与税费"],
+          output: "验收：回测成交假设可以逐条说明"
+        },
+        research: {
+          title: "回测是在审问机制，不是寻找冠军",
+          summary: "研究问题、基准、成本和切分方案要先于结果确定。保留每次试验，主动展示失败窗口。",
+          points: ["前视与幸存者偏差", "train、validation 与 test", "walk-forward 与负对照", "参数邻域与成本敏感性"],
+          output: "验收：策略报告包含完整样本外证据"
+        },
+        risk: {
+          title: "把预测变成可以承受的仓位",
+          summary: "学习权重、风险贡献、尾部风险、压力测试，以及订单状态、对账、幂等、监控和恢复。",
+          points: ["等权与风险预算", "VaR、ES 与压力情景", "订单状态与部分成交", "限额、告警与 kill switch"],
+          output: "验收：异常发生时系统不会继续放大风险"
+        }
+      };
+      var knowledgePanel = document.getElementById("knowledge-panel");
+      var knowledgeTitle = document.getElementById("knowledge-title");
+      var knowledgeSummary = document.getElementById("knowledge-summary");
+      var knowledgePoints = document.getElementById("knowledge-points");
+      var knowledgeOutput = document.getElementById("knowledge-output");
+      document.querySelectorAll(".knowledge-button").forEach(function (button) {
+        button.addEventListener("click", function () {
+          var topic = knowledgeTopics[button.dataset.topic];
+          document.querySelectorAll(".knowledge-button").forEach(function (item) {
+            item.setAttribute("aria-selected", String(item === button));
+          });
+          knowledgePanel.setAttribute("aria-labelledby", button.id || "");
+          knowledgeTitle.textContent = topic.title;
+          knowledgeSummary.textContent = topic.summary;
+          knowledgePoints.replaceChildren();
+          topic.points.forEach(function (point) {
+            knowledgePoints.appendChild(makeText("li", "", point));
+          });
+          knowledgeOutput.textContent = topic.output;
+        });
+      });
+
+      var activeProjectFilter = "all";
+      var projectSearch = document.getElementById("project-search");
+      var projectCards = Array.from(document.querySelectorAll(".project-card"));
+      var projectEmpty = document.getElementById("project-empty");
+      function filterProjects() {
+        var query = projectSearch.value.trim().toLocaleLowerCase("zh-CN");
+        var visible = 0;
+        projectCards.forEach(function (card) {
+          var matchesFilter = activeProjectFilter === "all" || card.dataset.tags.includes(activeProjectFilter);
+          var matchesQuery = !query || card.textContent.toLocaleLowerCase("zh-CN").includes(query) || card.dataset.tags.toLocaleLowerCase("zh-CN").includes(query);
+          var show = matchesFilter && matchesQuery;
+          card.classList.toggle("is-hidden", !show);
+          if (show) visible += 1;
+        });
+        projectEmpty.classList.toggle("is-visible", visible === 0);
+      }
+      document.querySelectorAll(".filter-button").forEach(function (button) {
+        button.addEventListener("click", function () {
+          activeProjectFilter = button.dataset.filter;
+          document.querySelectorAll(".filter-button").forEach(function (item) {
+            item.setAttribute("aria-pressed", String(item === button));
+          });
+          filterProjects();
+        });
+      });
+      projectSearch.addEventListener("input", filterProjects);
+
+      var starterChecks = Array.from(document.querySelectorAll("[data-starter]"));
+      var starterState = {};
+      try { starterState = JSON.parse(readStorage("quant-starter-progress", "{}")); } catch (error) { starterState = {}; }
+      var starterCount = document.getElementById("starter-count");
+      var storageNote = document.getElementById("storage-note");
+      function updateStarterProgress() {
+        var count = starterChecks.filter(function (checkbox) { return checkbox.checked; }).length;
+        starterCount.textContent = count + " / " + starterChecks.length;
+      }
+      starterChecks.forEach(function (checkbox) {
+        checkbox.checked = Boolean(starterState[checkbox.dataset.starter]);
+        checkbox.addEventListener("change", function () {
+          starterState[checkbox.dataset.starter] = checkbox.checked;
+          if (!writeStorage("quant-starter-progress", JSON.stringify(starterState))) {
+            storageNote.textContent = "浏览器未允许本地保存，本次进度只在当前页面有效。";
+          }
+          updateStarterProgress();
+        });
+      });
+      document.getElementById("starter-reset").addEventListener("click", function () {
+        starterState = {};
+        starterChecks.forEach(function (checkbox) { checkbox.checked = false; });
+        writeStorage("quant-starter-progress", "{}");
+        storageNote.textContent = "30 天计划已重置。";
+        updateStarterProgress();
+      });
+      if (!storageAvailable) storageNote.textContent = "浏览器未允许本地保存，本次进度只在当前页面有效。";
+      updateStarterProgress();
+
+      var copyButton = document.getElementById("copy-command");
+      var starterCommand = document.getElementById("starter-command").textContent;
+      copyButton.addEventListener("click", function () {
+        function showCopyResult(message) {
+          copyButton.textContent = message;
+          window.setTimeout(function () { copyButton.textContent = "复制命令"; }, 1600);
+        }
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(starterCommand).then(
+            function () { showCopyResult("已复制"); },
+            function () { showCopyResult("复制失败"); }
+          );
+          return;
+        }
+        var temporary = document.createElement("textarea");
+        temporary.value = starterCommand;
+        temporary.setAttribute("readonly", "");
+        temporary.style.position = "fixed";
+        temporary.style.opacity = "0";
+        document.body.appendChild(temporary);
+        temporary.select();
+        var copied = document.execCommand("copy");
+        temporary.remove();
+        showCopyResult(copied ? "已复制" : "复制失败");
+      });
+
       var themeToggle = document.getElementById("theme-toggle");
-      var storedTheme = localStorage.getItem("quant-route-theme");
+      var storedTheme = readStorage("quant-route-theme", "");
       if (storedTheme) document.documentElement.dataset.theme = storedTheme;
       themeToggle.addEventListener("click", function () {
         var current = document.documentElement.dataset.theme;
         var darkBySystem = window.matchMedia("(prefers-color-scheme: dark)").matches;
         var next = current === "dark" || (!current && darkBySystem) ? "light" : "dark";
         document.documentElement.dataset.theme = next;
-        localStorage.setItem("quant-route-theme", next);
+        writeStorage("quant-route-theme", next);
       });
 
       if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {

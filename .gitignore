@@ -2,6 +2,8 @@
 .env
 .env.*
 !.env.example
+.workagent/
+..workagent-operator-locks/
 05_实验代码/.venv/
 05_实验代码/.pytest_cache/
 05_实验代码/**/*.egg-info/

@@ -2,30 +2,35 @@
 
 ## 选择方法
 
-不是按 Star 排名，而是同时检查：最近代码推送、是否归档、许可证、文档、技术栈、学习目标与上手成本。下表元数据来自 GitHub 公共 API，快照日期为 **2026-08-30**；Star 和活跃度会变化。
+不是按 Star 排名，而是同时检查：最近代码推送、是否归档、许可证、文档、技术栈、学习目标与上手成本。下表元数据来自 GitHub 公共 API，快照日期为 **2026-09-03**；Star 和活跃度会变化。
 
 ## 推荐主线
 
 | 项目 | 快照（约 Star / 最近推送） | 许可 | 最适合学什么 | 建议 |
 |---|---:|---|---|---|
-| [AKShare](https://github.com/akfamily/akshare) | 22.3k / 2026-08-28 | MIT | 中国公开财经接口、字段与数据清洗 | 第 2 周起按需用；生产稳定性与上游授权另评估 |
+| [AKShare](https://github.com/akfamily/akshare) | 22.4k / 2026-09-02 | MIT | 中国公开财经接口、字段与数据清洗 | 第 2 周起按需用；生产稳定性与上游授权另评估 |
 | [yfinance](https://github.com/ranaroussi/yfinance) | 25.1k / 2026-08-27 | Apache-2.0 | 快速获取海外学习数据、接口封装 | 适合原型；遵守 Yahoo 数据条款，不作为唯一生产源 |
 | [backtesting.py](https://github.com/kernc/backtesting.py) | 8.9k / 2026-08-05 | AGPL-3.0 | 小型策略、API 简洁、可视化 | 第 9 周入门；分发/服务场景先理解 AGPL |
-| [bt](https://github.com/pmorissette/bt) | 3.0k / 2026-08-07 | MIT | 资产配置、权重算法、组合回测 | 第 15 周用于和自写组合比较 |
+| [bt](https://github.com/pmorissette/bt) | 3.0k / 2026-09-01 | MIT | 资产配置、权重算法、组合回测 | 第 15 周用于和自写组合比较 |
 | [zipline-reloaded](https://github.com/stefan-jansen/zipline-reloaded) | 1.9k / 2026-01-06 | Apache-2.0 | Zipline 范式、事件和管线式研究 | 想学 Zipline 时优先于原仓库 |
-| [Qlib](https://github.com/microsoft/qlib) | 48.1k / 2026-07-23 | MIT | 因子、ML 工作流、数据与实验管理 | 第 14/17 周；先理解其约定再跑大型例子 |
-| [VeighNa/vn.py](https://github.com/vnpy/vnpy) | 44.9k / 2026-08-28 | MIT | 中国交易生态、网关、事件驱动 | 工程分支首选；先模拟，不直接接真实账户 |
-| [LEAN](https://github.com/QuantConnect/Lean) | 21.4k / 2026-08-28 | Apache-2.0 | 多资产全栈引擎、算法框架 | C#/Python；规模大，按事件/组合/订单模块阅读 |
-| [NautilusTrader](https://github.com/nautechsystems/nautilus_trader) | 28.1k / 2026-08-30 | LGPL-3.0 | 确定性事件驱动、回放、订单模型 | 高阶工程阅读；Rust 内核，上手成本高 |
-| [WonderTrader](https://github.com/wondertrader/wondertrader) | 6.3k / 2025-09-30 | MIT | 中国期货/多策略框架、C++ 核心 | 工程分支对比 vn.py；先读架构和示例 |
-| [machine-learning-for-trading](https://github.com/stefan-jansen/machine-learning-for-trading) | 20.7k / 2026-08-30 | MIT | 从数据到 ML/回测的配套实验 | ML 分支教材库；逐章重做，不只运行 Notebook |
+| [Qlib](https://github.com/microsoft/qlib) | 48.2k / 2026-09-02 | MIT | 因子、ML 工作流、数据与实验管理 | 第 14/17 周；先理解其约定再跑大型例子 |
+| [VeighNa/vn.py](https://github.com/vnpy/vnpy) | 45.1k / 2026-09-01 | MIT | 中国交易生态、网关、事件驱动 | 工程分支首选；先模拟，不直接接真实账户 |
+| [LEAN](https://github.com/QuantConnect/Lean) | 21.5k / 2026-09-02 | Apache-2.0 | 多资产全栈引擎、算法框架 | C#/Python；规模大，按事件/组合/订单模块阅读 |
+| [NautilusTrader](https://github.com/nautechsystems/nautilus_trader) | 28.3k / 2026-09-03 | LGPL-3.0 | 确定性事件驱动、回放、订单模型 | 高阶工程阅读；Rust 内核，上手成本高 |
+| [WonderTrader](https://github.com/wondertrader/wondertrader) | 6.3k / 2026-09-01 | MIT | 中国期货/多策略框架、C++ 核心 | 工程分支对比 vn.py；先读架构和示例 |
+| [machine-learning-for-trading](https://github.com/stefan-jansen/machine-learning-for-trading) | 20.8k / 2026-09-03 | MIT | 从数据到 ML/回测的配套实验 | ML 分支教材库；逐章重做，不只运行 Notebook |
 | [FinRL](https://github.com/AI4Finance-Foundation/FinRL) | 16.2k / 2026-07-13 | MIT | 金融强化学习实验框架 | 高阶专题；先用规则/监督基准审视环境和奖励 |
+
+## 中文学习项目
+
+- [Datawhale Quant-for-Beginners](https://github.com/datawhalechina/quant-for-beginners)：约 547 Star，2026-09-01 推送，MIT；8 个已上线 Notebook 覆盖入门、收益、均线、回测、波动、夏普、回撤和组合，适合零基础配合本仓库前 8 周使用。
+- [Datawhale WhaleQuant](https://github.com/datawhalechina/whale-quant)：约 2.8k Star，2026-01-15 推送；覆盖数据、选股、择时、调仓、回测和 ML。README 标注 Alpha、Python 3.9，并采用 CC BY-NC-SA 4.0，适合补充中文案例而非直接作为生产模板。
 
 ## 按特殊市场选择
 
-- [Freqtrade](https://github.com/freqtrade/freqtrade)：约 53.8k Star，2026-08-27 推送，GPL-3.0；适合学习加密交易机器人、回测、优化和部署。加密市场和托管/交易所风险不能外推到股票。
-- [Hummingbot](https://github.com/hummingbot/hummingbot)：约 19.7k，2026-08-28 推送，Apache-2.0；适合连接器、做市和订单执行，高频实盘风险高。
-- [RQAlpha](https://github.com/ricequant/rqalpha)：约 6.7k，2026-08-28 推送；学习中国证券回测接口很方便，但许可证对非商业与商业用途分别规定，GitHub API 不能映射为标准 SPDX，使用前阅读仓库 `LICENSE`。
+- [Freqtrade](https://github.com/freqtrade/freqtrade)：约 54.0k Star，2026-09-03 推送，GPL-3.0；适合学习加密交易机器人、回测、优化和部署。加密市场和托管/交易所风险不能外推到股票。
+- [Hummingbot](https://github.com/hummingbot/hummingbot)：约 19.8k，2026-09-03 推送，Apache-2.0；适合连接器、做市和订单执行，高频实盘风险高。
+- [RQAlpha](https://github.com/ricequant/rqalpha)：约 6.7k，2026-09-02 推送；学习中国证券回测接口很方便，但许可证对非商业与商业用途分别规定，GitHub API 不能映射为标准 SPDX，使用前阅读仓库 `LICENSE`。
 - [vectorbt](https://github.com/polakowo/vectorbt)：约 8.9k，2026-08-02 推送；适合批量向量化实验。仓库为 Commons Clause 条件的自定义许可，GitHub API 显示 `NOASSERTION`，尤其商业使用前逐条核对。
 
 ## 历史影响大，但不作为新手主线
